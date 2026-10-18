@@ -1,0 +1,3317 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="#142820" name="theme-color" />
+    <title>DEAD SIGNAL | Presentation</title>
+    <style>
+      :root {
+        --forest: #142820;
+        --ink: #1c3329;
+        --cream: #f6f7ef;
+        --lime: #cfed75;
+        --coral: #ff9172;
+        --line: #d6e3d8;
+        --muted: #597268;
+        --panel: #fffef9;
+        --w: 1440px;
+        --h: 810px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      body {
+        font-family:
+          "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic",
+          system-ui, sans-serif;
+        line-height: 1.5;
+        word-break: keep-all;
+        background:
+          radial-gradient(ellipse at 10% 2%, #c9d6c8 0, transparent 48%),
+          radial-gradient(ellipse at 90% 90%, #adc8b9, transparent 48%), #e6eee6;
+        color: var(--ink);
+        display: flex;
+        flex-direction: column;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+      button:focus-visible,
+      [role="button"]:focus-visible {
+        outline: 3px solid #57a47a;
+        outline-offset: 3px;
+      }
+      button:disabled {
+        opacity: 0.32;
+        cursor: not-allowed;
+      }
+      #screen {
+        flex: 1;
+        min-height: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 6px;
+      }
+      #deck-shell {
+        position: relative;
+        flex: none;
+        filter: drop-shadow(0 20px 27px #132a221f);
+      }
+      #deck {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1440px;
+        height: 810px;
+        transform-origin: top left;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        width: 1440px;
+        height: 810px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 35px 58px 31px;
+        border-radius: 19px;
+        border: 1px solid #ffffff90;
+        background:
+          radial-gradient(ellipse 50% 70% at 95% 5%, #d8e9da, transparent 80%),
+          radial-gradient(ellipse 50% 60% at 3% 93%, #e8edcb, transparent 80%),
+          linear-gradient(136deg, #fdfef8, #eef4eb 65%, #e6efe8);
+        box-shadow: inset 0 0 0 1px #fff6;
+        color: var(--ink);
+      }
+      .slide[hidden] {
+        display: none !important;
+      }
+      .slide:before {
+        content: "";
+        position: absolute;
+        right: 30px;
+        top: 44px;
+        width: 160px;
+        height: 160px;
+        opacity: 0.26;
+        pointer-events: none;
+        background-image: radial-gradient(#79a487 1px, transparent 1px);
+        background-size: 15px 15px;
+        mask-image: linear-gradient(to right, transparent, black);
+      }
+      .slide-meta,
+      .slide-footer {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #5f806a;
+      }
+      .slide-meta {
+        height: 24px;
+        margin-bottom: 13px;
+      }
+      .brand-dot {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        background: var(--coral);
+        border-radius: 3px;
+        margin-right: 9px;
+      }
+      .meta-sep {
+        opacity: 0.45;
+        margin: 0 10px;
+      }
+      .meta-index {
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .slide-footer {
+        height: 24px;
+        margin-top: 10px;
+        border-top: 1px solid #b9cfbe80;
+        padding-top: 12px;
+        font-size: 10px;
+        opacity: 0.8;
+      }
+      .slide-heading {
+        position: relative;
+        flex-shrink: 0;
+        max-height: 142px;
+        margin-bottom: 23px;
+      }
+      .slide h1 {
+        font-size: 46px;
+        font-weight: 830;
+        letter-spacing: -0.065em;
+        margin: 0 0 6px;
+        line-height: 1.17;
+      }
+      .slide h1 em {
+        color: #679e60;
+        font-style: normal;
+      }
+      .slide-heading > p {
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.4;
+        margin: 0;
+        font-weight: 500;
+      }
+      .slide-content {
+        position: relative;
+        min-height: 0;
+        flex: 1;
+        overflow: hidden;
+      }
+      .slide h2 {
+        font-size: 35px;
+        line-height: 1.3;
+        letter-spacing: -0.05em;
+        margin: 0 0 18px;
+      }
+      .slide h3 {
+        font-size: 20px;
+        line-height: 1.28;
+        letter-spacing: -0.035em;
+        margin: 0 0 11px;
+      }
+      .slide p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .slide p + p {
+        margin-top: 11px;
+      }
+      .panel {
+        min-height: 0;
+        min-width: 0;
+        border-radius: 16px;
+        border: 1px solid #d9e6d9;
+        background: linear-gradient(145deg, #fffefbf5, #f1f6eff0);
+        padding: 23px;
+        box-shadow: 0 10px 25px #193c290c;
+        overflow: hidden;
+      }
+      .panel p {
+        font-size: 16px;
+        line-height: 1.56;
+      }
+      .panel strong {
+        font-weight: 750;
+      }
+      .micro,
+      .kicker {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        font-weight: 800;
+      }
+      .kicker {
+        color: #5d9d6e;
+      }
+      .accent-line {
+        width: 27px;
+        height: 3px;
+        border-radius: 4px;
+        display: inline-block;
+        background: var(--lime);
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+      .media-box {
+        margin: 0;
+        min-width: 0;
+        min-height: 0;
+        position: relative;
+        border-radius: 16px;
+        background: linear-gradient(133deg, #d9e7db, #eef3e8);
+        overflow: hidden;
+        box-shadow: 0 7px 18px #132d2314;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .media-element {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: inherit;
+        min-width: 0;
+        min-height: 0;
+      }
+      .media-element[hidden] {
+        display: none !important;
+      }
+      .media-box video {
+        background: #14251f;
+      }
+      .media-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #142a23c9;
+        color: #fff;
+        padding: 7px 13px;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+      }
+      .asset-fallback {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        gap: 7px;
+        background: linear-gradient(130deg, #d9e9db, #e9f1e3);
+        color: #6f8977;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .asset-fallback::before {
+        content: "▧";
+        font-size: 30px;
+        opacity: 0.55;
+      }
+      .asset-fallback.horror-fallback {
+        background: #12221ddd;
+        color: #adc5b5;
+      }
+      .two-column {
+        height: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, var(--left, 1.6fr)) minmax(0, 1fr);
+        gap: 18px;
+      }
+      .primary-media {
+        height: 100%;
+        width: 100%;
+        align-self: stretch;
+      }
+      .right-stack {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .right-stack > * {
+        flex: 1;
+        min-height: 0;
+      }
+      .right-stack > .mini-panel {
+        flex: 0 0 auto;
+      }
+      .right-stack > .big-panel {
+        flex: 1;
+      }
+      .right-stack h3 {
+        color: var(--ink);
+      }
+      .tone-dark {
+        background:
+          radial-gradient(
+            ellipse 60% 80% at 92% 6%,
+            #3b5e42c0,
+            transparent 75%
+          ),
+          radial-gradient(
+            ellipse 48% 75% at 5% 100%,
+            #2c4b3dc5,
+            transparent 78%
+          ),
+          linear-gradient(135deg, #0f211b, #142d24 60%, #1d382b);
+        color: #f5f6ec;
+        border-color: #294b3c;
+      }
+      .tone-dark .slide-meta,
+      .tone-dark .slide-footer {
+        color: #b5d2b9;
+      }
+      .tone-dark .slide-heading p {
+        color: #bed0c2;
+      }
+      .tone-dark h1 em {
+        color: var(--lime);
+      }
+      .tone-dark:before {
+        background-image: radial-gradient(#80b49a 1.4px, transparent 1.4px);
+      }
+      .hero-split {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1.28fr;
+        gap: 30px;
+      }
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 38px;
+      }
+      .hero-copy .micro {
+        color: #c9e48e;
+      }
+      .hero-emphasis {
+        font-weight: 850;
+        font-size: 43px;
+        line-height: 1.45;
+        letter-spacing: -0.06em;
+      }
+      .hero-emphasis strong {
+        color: var(--lime);
+      }
+      .hero-rule {
+        color: #89ab97;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+      }
+      .hero-rule b {
+        color: var(--coral);
+        padding: 0 12px;
+      }
+      .hero-image {
+        height: 100%;
+        border: 1px solid #3c5d4b;
+        background: #183127;
+      }
+      .hero-image img {
+        background: #183127;
+      }
+      .wide-media-layout {
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+      }
+      .wide-media {
+        height: 100%;
+        width: 100%;
+      }
+      .wide-media .media-element {
+        object-fit: contain;
+      }
+      .experience-overlay {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 36%;
+        padding: 30px 32px;
+        background: linear-gradient(130deg, #152b24e9, #19392ee8);
+        border-radius: 16px 0 0 0;
+        box-shadow: -9px -9px 30px #0d241b30;
+      }
+      .experience-overlay h2 {
+        color: #f3f8ed;
+        font-size: 30px;
+        margin: 9px 0;
+      }
+      .experience-overlay p {
+        font-size: 15px;
+        color: #b9d4bd;
+      }
+      .compact-overlay {
+        width: auto;
+        min-width: 33%;
+        padding: 25px;
+      }
+      .compact-overlay h2 {
+        font-size: 29px;
+      }
+      .reference-grid {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .reference-card {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+      }
+      .reference-card:hover {
+        border-color: #9dc59f;
+        box-shadow: 0 18px 28px #14372414;
+      }
+      .reference-image {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        background: #e0e9df;
+        overflow: hidden;
+      }
+      .reference-image > .media-element {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .reference-text {
+        padding: 21px;
+        flex: 0 0 145px;
+      }
+      .reference-text p {
+        font-size: 16px;
+      }
+      .open-hint {
+        display: block;
+        color: #5c9665;
+        font-size: 12px;
+        margin-top: 13px;
+        font-weight: 800;
+      }
+      .role-grid {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .role-card {
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .role-line {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .role-line h3 {
+        margin: 0;
+        font-size: 23px;
+      }
+      .role-no {
+        font-size: 14px;
+        color: #78a15e;
+        font-weight: 800;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .role-card .role-owner {
+        font-size: 14px;
+        font-weight: 650;
+        color: #63756a;
+      }
+      .role-owner strong {
+        font-size: 18px;
+        color: var(--ink);
+        margin-left: 8px;
+      }
+      .role-card > p:last-child {
+        font-size: 14px;
+        line-height: 1.5;
+        color: #7a8b7b;
+      }
+      .role-card > p:last-child span {
+        display: block;
+        margin-top: 4px;
+        font-size: 16px;
+        font-weight: 650;
+        color: #344b3b;
+      }
+      .concept-box {
+        border-radius: 16px;
+        border: 1px solid #d7e4d9;
+        background:
+          radial-gradient(ellipse at 52% 10%, #cfe1d0, transparent 72%),
+          linear-gradient(130deg, #ecf3e8, #dceadf);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        gap: 10px;
+      }
+      .concept-box svg {
+        width: 100%;
+        height: 70%;
+        max-height: 190px;
+      }
+      .concept-label {
+        font-size: 11px;
+        color: #829b8a;
+        font-weight: 700;
+        letter-spacing: 0.045em;
+      }
+      .mini-table-panel {
+        flex: 1.22 !important;
+        padding: 22px;
+      }
+      .mini-table-panel h3 {
+        margin-bottom: 14px;
+      }
+      .compact-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        font-size: 13px;
+        line-height: 1.48;
+      }
+      .compact-table th {
+        text-align: left;
+        font-size: 12px;
+        background: #dae8db;
+        color: #476a53;
+        padding: 9px 9px;
+      }
+      .compact-table td {
+        padding: 10px 9px;
+        border-bottom: 1px solid #dce7d9;
+        vertical-align: middle;
+        color: #3e5448;
+      }
+      .compact-table tr:last-child td {
+        border: 0;
+      }
+      .compact-table td:first-child {
+        font-weight: 780;
+        white-space: nowrap;
+      }
+      .compact-table td:nth-child(2) {
+        white-space: nowrap;
+      }
+      .compact-table kbd {
+        font-family: inherit;
+        font-weight: 850;
+        color: #2c6242;
+      }
+      .mini-panel {
+        padding: 18px 22px !important;
+      }
+      .mini-panel h3 {
+        font-size: 18px;
+      }
+      .mini-panel p {
+        font-size: 14px;
+        line-height: 1.52;
+      }
+      .mini-panel p + p {
+        margin-top: 6px;
+      }
+      .patrol-panel {
+        flex: 1.5 !important;
+        padding: 18px 22px;
+      }
+      .patrol-panel h3 {
+        font-size: 17px;
+        margin: 11px 0 8px;
+      }
+      .patrol-image {
+        height: 145px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(140deg, #162e29, #2a493a);
+        border-radius: 11px;
+        overflow: hidden;
+        padding: 12px;
+      }
+      .patrol-image svg {
+        width: 100%;
+        height: 105px;
+      }
+      .patrol-image span {
+        color: #a7cbb1;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+      .steps {
+        padding: 0 0 0 20px;
+        margin: 0;
+      }
+      .steps li {
+        color: #455d4a;
+        font-size: 13px;
+        line-height: 1.54;
+        margin: 5px 0;
+      }
+      .accent-word {
+        font-size: 0.64em;
+        vertical-align: 6px;
+        color: #6eaa75;
+      }
+      .special-details {
+        flex: 1.55 !important;
+        padding: 18px 23px;
+      }
+      .detail + .detail {
+        border-top: 1px solid #d4e3d7;
+        margin-top: 13px;
+        padding-top: 13px;
+      }
+      .detail strong {
+        display: block;
+        font-size: 15px;
+        color: #366e4d;
+        margin-bottom: 5px;
+      }
+      .detail p {
+        font-size: 14px;
+        line-height: 1.48;
+      }
+      .special-details .detail + .detail {
+        margin-top: 10px;
+        padding-top: 10px;
+      }
+      .big-panel {
+        padding: 28px;
+      }
+      .big-panel .detail {
+        margin-top: 27px;
+      }
+      .big-panel .detail p {
+        font-size: 17px;
+      }
+      .tone-horror {
+        color: #f1f3ed;
+        background:
+          linear-gradient(90deg, #101414ed 0%, #121917d6 50%, #0b1312c9 100%),
+          url("./image/game_artboard_01.png") center / cover no-repeat,
+          #171c19;
+        border-color: #2b3733;
+      }
+      .tone-horror:before {
+        opacity: 0.06;
+      }
+      .tone-horror .slide-meta,
+      .tone-horror .slide-footer {
+        color: #d0d7d0;
+      }
+      .tone-horror .slide-heading p {
+        color: #bec6c1;
+      }
+      .tone-horror .slide h1,
+      .tone-horror h1 {
+        color: #f6f9f5;
+      }
+      .tone-horror h1 em {
+        color: #b9d1c0;
+      }
+      .horror-layout {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1.42fr 1fr;
+        gap: 18px;
+      }
+      .horror-statement {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 27px;
+        padding: 25px 20px;
+      }
+      .outline-label {
+        font-size: 13px;
+        font-weight: 850;
+        letter-spacing: 0.17em;
+        color: #abc0b2;
+      }
+      .big-horror {
+        font-size: 65px;
+        line-height: 1.08;
+        letter-spacing: -0.055em;
+        font-weight: 900;
+        color: #fff;
+      }
+      .big-horror em {
+        font-style: normal;
+        color: #b9d7bc;
+      }
+      .horror-statement p {
+        font-size: 20px;
+        max-width: 510px;
+        color: #d2d8d1;
+      }
+      .horror-panel {
+        background: #101717d9 !important;
+        border-color: #ffffff20 !important;
+        color: #eef2ee !important;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 15px 34px #0003;
+      }
+      .horror-panel h3 {
+        color: #f6f8f6 !important;
+      }
+      .horror-panel p {
+        color: #d1dad1 !important;
+      }
+      .horror-panel .detail {
+        border-color: #ffffff2b;
+      }
+      .horror-panel .detail strong {
+        color: #d4e8d1;
+      }
+      .game-palette-list {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .palette-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 13px;
+        color: #ebeee9;
+      }
+      .color-chip {
+        display: block;
+        width: 42px;
+        height: 34px;
+        border-radius: 7px;
+        flex: none;
+        border: 1px solid #fffb;
+      }
+      .palette-share {
+        width: 34px;
+        font-size: 12px;
+        font-weight: 900;
+        color: #bfe6b2;
+      }
+      .palette-name {
+        flex: 1;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .palette-item code {
+        font-size: 11px;
+        color: #acbcaf;
+      }
+      .ref-horror {
+        grid-template-columns: 1.25fr 1fr;
+      }
+      .stacked-reference {
+        min-height: 0;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: 15px;
+      }
+      .horror-ref {
+        padding: 9px;
+        display: grid;
+        grid-template-columns: 45% 1fr;
+        gap: 16px;
+        align-items: center;
+        background: #111b1bdb;
+        border-color: #ffffff24;
+      }
+      .horror-ref h3 {
+        font-size: 21px;
+        color: #fff;
+      }
+      .horror-ref p {
+        font-size: 16px;
+        color: #cbd5cd;
+      }
+      .horror-ref .media-box {
+        height: 100%;
+        width: 100%;
+      }
+      .horror-ref img {
+        object-fit: contain;
+      }
+      .visual-tags {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        margin: 18px 0 20px;
+      }
+      .visual-tags span {
+        font-size: 11px;
+        border: 1px solid #a9c4b566;
+        border-radius: 6px;
+        padding: 8px;
+        color: #cee7c9;
+        font-weight: 850;
+      }
+      .mesh-stack .media-box {
+        width: 100%;
+        height: 100%;
+        background: #1b2824;
+      }
+      .mesh-stack img {
+        max-width: 100%;
+        max-height: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .pipeline {
+        background: #3144389e;
+        color: #e3f0dd;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 800;
+        margin-top: 18px;
+        padding: 13px;
+        white-space: nowrap;
+      }
+      .pipeline b {
+        padding: 0 9px;
+        color: #c7eb86;
+      }
+      .artwork-scroller {
+        height: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 18px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 9px;
+        scrollbar-width: thin;
+        scrollbar-color: #acc5ac transparent;
+      }
+      .artwork-card {
+        flex: 0 0 calc((100% - 36px) / 3);
+        height: 100%;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        scroll-snap-align: start;
+      }
+      .artwork-card .media-box {
+        height: 75%;
+        width: 100%;
+      }
+      .artwork-card > div:last-child {
+        padding: 22px 15px;
+      }
+      .artwork-card h3 {
+        font-size: 22px;
+      }
+      .artwork-card p {
+        font-size: 15px;
+      }
+      .sound-layout {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 43% minmax(0, 57%);
+        gap: 18px;
+      }
+      .sound-table {
+        padding: 23px;
+      }
+      .sound-table h3 {
+        margin-bottom: 15px;
+      }
+      .sound-table .compact-table {
+        font-size: 14px;
+      }
+      .sound-table .compact-table td {
+        padding: 17px 9px;
+      }
+      .sound-grid {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .sound-tile {
+        background: linear-gradient(142deg, #fffefaf5, #eaf3e8);
+        border: 1px solid #d5e4d7;
+        border-radius: 14px;
+        padding: 14px 16px;
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        grid-template-rows: auto 44px;
+        column-gap: 8px;
+        align-content: space-between;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .sound-index {
+        color: #8bad80;
+        font-weight: 900;
+        font-size: 15px;
+      }
+      .sound-tile strong {
+        display: block;
+        color: #264333;
+        font-size: 14px;
+      }
+      .sound-tile small {
+        display: block;
+        color: #728478;
+        font-size: 11px;
+        margin-top: 4px;
+      }
+      .sound-tile audio {
+        grid-column: 1/-1;
+        width: 100%;
+        height: 36px;
+        max-width: 100%;
+        margin: 0;
+        accent-color: #638969;
+      }
+      .audio-wave-panel {
+        padding: 10px;
+        background: #e6f0e5;
+      }
+      .audio-wave-panel img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+      }
+      .sound-demo audio {
+        display: block;
+        width: 100%;
+        height: 48px;
+        margin-top: 15px;
+      }
+      .code-chip {
+        background: #dbe9de;
+        border-radius: 7px;
+        color: #265d3c;
+        padding: 12px;
+        margin: 13px 0;
+        font:
+          14px/1.3 ui-monospace,
+          monospace;
+      }
+      .smalltext {
+        font-size: 12px !important;
+      }
+      .next-grid {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+      }
+      .next-card {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .next-number {
+        font-size: 61px;
+        font-weight: 900;
+        color: #a6ce80;
+        margin-bottom: 24px;
+        line-height: 1;
+      }
+      .next-card h3 {
+        font-size: 27px;
+      }
+      .next-card p {
+        font-size: 18px;
+      }
+      .closing {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 25px;
+      }
+      .closing-mark {
+        font-size: 104px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.08em;
+        color: #f5f9ef;
+      }
+      .closing-mark span {
+        color: var(--coral);
+        padding: 0 15px;
+      }
+      .closing-bar {
+        height: 3px;
+        width: 340px;
+        background: linear-gradient(90deg, var(--lime), transparent);
+        margin-top: 15px;
+      }
+      .closing p {
+        color: #b8d4c4;
+        font-size: 15px;
+        letter-spacing: 0.16em;
+        font-weight: 800;
+      }
+      /* Navigation is outside the 16:9 slide, so it never obscures slide content. */
+      #toolbar-row {
+        height: 71px;
+        min-height: 71px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 22px 12px;
+        gap: 12px;
+      }
+      .transport {
+        border: 1px solid #c9dacd;
+        border-radius: 14px;
+        background: #fdfefbea;
+        box-shadow: 0 7px 21px #1a412324;
+        backdrop-filter: blur(15px);
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        height: 50px;
+      }
+      .transport button {
+        min-width: 35px;
+        height: 36px;
+        border: 0;
+        background: none;
+        border-radius: 9px;
+        color: #32513c;
+        font-size: 16px;
+        font-weight: 800;
+      }
+      .transport button:hover:not(:disabled) {
+        background: #e6eee3;
+      }
+      .transport .play-btn {
+        font-size: 12px;
+        padding: 0 13px;
+        background: #d2ed85;
+        color: #243a27;
+      }
+      .transport .stop-btn {
+        font-size: 12px;
+        padding: 0 12px;
+        background: #edf0e9;
+      }
+      .transport .play-btn[aria-pressed="true"] {
+        background: #b9e568;
+      }
+      .transport .stop-btn[aria-pressed="true"] {
+        background: #dde4da;
+      }
+      .toolbar-divider {
+        background: #d0ddd1;
+        width: 1px;
+        height: 25px;
+        margin: 0 5px;
+      }
+      .transport .slide-counter {
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        font-weight: 900;
+        color: #64806b;
+        min-width: 58px;
+        text-align: center;
+      }
+      .transport .timer {
+        width: 60px;
+        height: 4px;
+        border-radius: 10px;
+        background: #dce5d9;
+        overflow: hidden;
+        margin: 0 8px 0 2px;
+      }
+      .timer-progress {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: #5b9e69;
+        transform: scaleX(0);
+        transform-origin: left;
+      }
+      .toolbar-note {
+        font-size: 11px;
+        color: #55715e;
+        letter-spacing: 0.02em;
+      }
+      /* reference dialog */
+      dialog {
+        width: min(1100px, 94vw);
+        max-height: 92dvh;
+        border: 1px solid #dce6df;
+        border-radius: 18px;
+        background: #f7f9f4;
+        box-shadow: 0 28px 95px #0006;
+        padding: 22px;
+        color: #193a2b;
+      }
+      dialog::backdrop {
+        background: #0e211acf;
+        backdrop-filter: blur(6px);
+      }
+      .modal-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .modal-head h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .modal-head button,
+      .modal-actions button {
+        border: 0;
+        background: #d4ec94;
+        color: #28472d;
+        border-radius: 9px;
+        padding: 8px 15px;
+        font-weight: 750;
+      }
+      .modal-intro {
+        color: #64806e;
+        margin: 0 0 15px;
+        font-size: 14px;
+      }
+      .modal-screen {
+        height: min(58dvh, 580px);
+        background: #132920;
+        border-radius: 13px;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+      .modal-screen img,
+      .modal-screen video {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        object-fit: contain;
+      }
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-top: 15px;
+      }
+      .modal-count {
+        font-size: 13px;
+        color: #54705c;
+      }
+      @media (max-width: 650px) {
+        #toolbar-row {
+          padding: 0 10px 10px;
+          height: 63px;
+          min-height: 63px;
+        }
+        .transport {
+          height: 45px;
+        }
+        .transport button {
+          height: 34px;
+          min-width: 30px;
+        }
+        .toolbar-note {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+      @media print {
+        html,
+        body {
+          width: auto;
+          height: auto;
+          overflow: visible !important;
+          background: white;
+        }
+        #screen {
+          display: block;
+          padding: 0;
+        }
+        #deck-shell,
+        #deck {
+          position: static !important;
+          transform: none !important;
+          width: auto !important;
+          height: auto !important;
+          filter: none !important;
+        }
+        .slide,
+        .slide[hidden] {
+          display: flex !important;
+          position: relative !important;
+          break-after: page;
+          border-radius: 0 !important;
+        }
+        #toolbar-row,
+        dialog {
+          display: none !important;
+        }
+        @page {
+          size: 16in 9in;
+          margin: 0;
+        }
+      }
+
+      /* Revision 02: preserve every source image and replace letterboxing with softly extended imagery. */
+      .media-box,
+      .reference-image,
+      .audio-wave-panel {
+        isolation: isolate;
+        overflow: hidden;
+      }
+      .media-box.has-image-art::before,
+      .reference-image.has-image-art::before,
+      .audio-wave-panel.has-image-art::before {
+        content: "";
+        position: absolute;
+        inset: -24px;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(#14291d1c, #14291d28), var(--media-background);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: blur(22px) saturate(0.84) brightness(0.86);
+        transform: scale(1.09);
+      }
+      .media-box > .media-element,
+      .reference-image > .media-element,
+      .audio-wave-panel > .media-element {
+        position: relative;
+        z-index: 1;
+        object-fit: contain;
+        background: transparent !important;
+      }
+      .media-box > video.media-element {
+        background: #15251f !important;
+      }
+      .media-box > .asset-fallback,
+      .reference-image > .asset-fallback,
+      .audio-wave-panel > .asset-fallback {
+        z-index: 3;
+      }
+      .media-box .media-caption {
+        z-index: 2;
+      }
+      /* Experience/integration labels: reduced transparency (more solid), higher text contrast. */
+      #experience .experience-overlay,
+      #build .experience-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(16, 35, 27, 0.97),
+          rgba(22, 49, 37, 0.97)
+        );
+        border: 1px solid rgba(190, 218, 186, 0.24);
+        box-shadow: -10px -12px 28px #07170f3b;
+      }
+      /* Escape diagram: rectangular numbered switches with consistent spacing. */
+      #goal .concept-box svg {
+        max-height: 165px;
+        width: 100%;
+      }
+      #goal .concept-label {
+        margin-top: 1px;
+        text-align: center;
+        font-size: 11px;
+        letter-spacing: 0.07em;
+      }
+      /* Art direction: original image can be revealed temporarily for visual inspection. */
+      #graphic-direction {
+        background: #0e1713;
+        isolation: isolate;
+      }
+      #graphic-direction .art-preview-backdrop {
+        position: absolute;
+        z-index: 0;
+        inset: -9px;
+        pointer-events: none;
+        background: url("./image/game_artboard_01.png") center center/cover
+          no-repeat;
+        filter: blur(9px);
+        transform: scale(1.035);
+        transition:
+          filter 0.3s ease,
+          transform 0.3s ease;
+      }
+      #graphic-direction .art-preview-scrim {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          90deg,
+          rgba(10, 18, 16, 0.92),
+          rgba(10, 18, 16, 0.73) 48%,
+          rgba(10, 18, 16, 0.79)
+        );
+        transition: opacity 0.3s ease;
+      }
+      #graphic-direction > .slide-meta,
+      #graphic-direction > .slide-heading,
+      #graphic-direction > .slide-content,
+      #graphic-direction > .slide-footer {
+        z-index: 2;
+        transition: opacity 0.23s ease;
+      }
+      #graphic-direction.is-art-preview .art-preview-backdrop {
+        filter: blur(0);
+        transform: scale(1);
+      }
+      #graphic-direction.is-art-preview .art-preview-scrim {
+        opacity: 0.03;
+      }
+      #graphic-direction.is-art-preview > .slide-meta,
+      #graphic-direction.is-art-preview > .slide-heading,
+      #graphic-direction.is-art-preview > .slide-content,
+      #graphic-direction.is-art-preview > .slide-footer {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .backdrop-preview {
+        align-self: flex-start;
+        background: #d1ed92;
+        color: #163a27;
+        border: 1px solid #d9f0ad;
+        font-size: 15px;
+        font-weight: 800;
+        padding: 11px 19px;
+        border-radius: 11px;
+        box-shadow: 0 9px 25px #0004;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        white-space: nowrap;
+      }
+      .backdrop-preview:hover {
+        background: #e0f2b6;
+        transform: translateY(-1px);
+      }
+      /* Shared visual language: image-ready slot above the description and tags. */
+      #graphic-reference .right-stack > .horror-panel:first-child {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        justify-content: flex-start;
+        padding: 17px 19px !important;
+      }
+      #graphic-reference .right-stack > .horror-panel:first-child h3 {
+        margin: 0;
+      }
+      #graphic-reference .right-stack > .horror-panel:first-child p {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      #graphic-reference .right-stack > .horror-panel:first-child .visual-tags {
+        margin: 0;
+      }
+      .common-visual-slot {
+        height: 210px;
+        flex: 0 0 210px;
+        min-height: 0;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+        border: 1px solid #a4bbab50;
+        background: #1d332c;
+      }
+      .common-visual-slot svg,
+      .common-visual-slot img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Sound demonstration: full-width waveform on top, equal-size panels on bottom. */
+      .sound-process-layout {
+        height: 100%;
+        display: grid;
+        grid-template-rows: minmax(0, 1.45fr) minmax(0, 1fr);
+        gap: 16px;
+        min-height: 0;
+      }
+      .sound-process-image {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        min-height: 0;
+        padding: 0 !important;
+        border-radius: 16px;
+        background: linear-gradient(130deg, #dfeae0, #c7dccf);
+      }
+      .sound-process-image .media-element {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .sound-process-bottom {
+        height: 100%;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .sound-process-bottom > * {
+        min-height: 0;
+        min-width: 0;
+        margin: 0;
+        padding: 20px 23px !important;
+      }
+      .sound-process-bottom .sound-demo audio {
+        height: 44px;
+        margin-top: 14px;
+      }
+      .sound-process-bottom .panel h3 {
+        font-size: 21px;
+        margin: 0 0 8px;
+      }
+      .sound-process-bottom .panel p {
+        font-size: 15px;
+        line-height: 1.45;
+      }
+      .sound-process-bottom .code-chip {
+        margin-top: 12px;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+      .sound-process-bottom .smalltext {
+        font-size: 12px;
+        margin-top: 6px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #graphic-direction .art-preview-backdrop,
+        #graphic-direction .art-preview-scrim,
+        #graphic-direction > .slide-meta,
+        #graphic-direction > .slide-heading,
+        #graphic-direction > .slide-content,
+        #graphic-direction > .slide-footer {
+          transition: none !important;
+        }
+      }
+    </style>
+    <script
+      type="text/javascript"
+      nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs="
+      src="//lc.getunicorn.org?type=base-script&amp;request-id=6122"
+    ></script>
+  </head>
+  <body>
+    <div id="screen">
+      <div id="deck-shell">
+        <main aria-label="DEAD SIGNAL 발표 슬라이드" id="deck">
+          <section
+            aria-labelledby="ttl-intro"
+            class="slide tone-dark"
+            hidden=""
+            id="intro"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >01 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-intro">DEAD <em>SIGNAL</em></h1>
+              <p>도망가는 상황에서도 조작에 집중해야 하는 게임입니다</p>
+            </div>
+            <div class="slide-content">
+              <div class="hero-split">
+                <div class="hero-copy">
+                  <div class="micro">
+                    <span class="accent-line"></span> SURVIVAL HORROR / PUZZLE /
+                    QTE
+                  </div>
+                  <div class="hero-emphasis">
+                    공포 속에서도<br /><strong>통제력을 유지하라.</strong>
+                  </div>
+                  <div class="hero-rule">
+                    HEARTBEAT <b>×</b> PRECISION <b>×</b> ESCAPE
+                  </div>
+                </div>
+                <div class="media-box hero-image" data-no-next="">
+                  <img
+                    alt="게임 메인 화면"
+                    class="media-element"
+                    loading="lazy"
+                    src="./image/game_main_01.png"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>INTRO</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-experience"
+            class="slide"
+            hidden=""
+            id="experience"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >02 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-experience">어떤 게임인가요?</h1>
+              <p>
+                공포 상황에서 아슬아슬하게 줄타기하는 듯한 경험을 목표로 합니다.
+              </p>
+            </div>
+            <div class="slide-content">
+              <div class="wide-media-layout">
+                <div class="media-box wide-media" data-no-next="">
+                  <img
+                    alt="핵심 플레이 이미지"
+                    class="media-element"
+                    loading="lazy"
+                    src="./image/game_main_repe.png"
+                  />
+                </div>
+                <div class="experience-overlay">
+                  <span class="kicker">CORE EXPERIENCE</span>
+                  <h2>도망치면서도<br />침착하게 조작한다.</h2>
+                  <p>
+                    심박수를 관리하며, 위협 속에서 정밀한 상호작용을 수행합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>EXPERIENCE</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-reference"
+            class="slide"
+            hidden=""
+            id="reference"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >03 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-reference">참고 게임</h1>
+              <p>플레이 방식과 화면 연출에서 필요한 요소를 추렸습니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="reference-grid">
+                <article
+                  aria-haspopup="dialog"
+                  class="reference-card panel"
+                  data-no-next=""
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="reference-image">
+                    <img
+                      alt="데드 바이 데이라이트"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/deadBydaylight_01.png"
+                    /><img
+                      alt="데드 바이 데이라이트 두 번째 참고 이미지"
+                      class="modal-extra"
+                      hidden=""
+                      src="./image/deadBydaylight_02.png"
+                    />
+                  </div>
+                  <div class="reference-text">
+                    <h3>데드 바이 데이라이트</h3>
+                    <p>QTE와 숨기, 캐비닛 활용</p>
+                    <span class="open-hint">자료 크게 보기 ↗</span>
+                  </div>
+                </article>
+                <article
+                  aria-haspopup="dialog"
+                  class="reference-card panel"
+                  data-no-next=""
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="reference-image">
+                    <video
+                      class="media-element"
+                      controls=""
+                      playsinline=""
+                      preload="metadata"
+                      src="./video/sinYowamari_01.mp4"
+                    ></video>
+                  </div>
+                  <div class="reference-text">
+                    <h3>신 요마와리</h3>
+                    <p>심박수 사운드와 UI</p>
+                    <span class="open-hint">자료 크게 보기 ↗</span>
+                  </div>
+                </article>
+                <article
+                  aria-haspopup="dialog"
+                  class="reference-card panel"
+                  data-no-next=""
+                  role="button"
+                  tabindex="0"
+                >
+                  <div class="reference-image">
+                    <img
+                      alt="아이작의 번제"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/isaac_01.png"
+                    /><img
+                      alt="아이작의 번제 두 번째 참고 이미지"
+                      class="modal-extra"
+                      hidden=""
+                      src="./image/isaac_02.png"
+                    />
+                  </div>
+                  <div class="reference-text">
+                    <h3>아이작의 번제</h3>
+                    <p>방 단위로 연결되는 맵 구성</p>
+                    <span class="open-hint">자료 크게 보기 ↗</span>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>REFERENCE</span>
+            </div>
+          </section>
+          <section aria-labelledby="ttl-mvp" class="slide" hidden="" id="mvp">
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >04 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-mvp">역할 분배</h1>
+              <p>
+                핵심 기능을 먼저 구현하기 위해 여섯 가지 역할로 분담했습니다.
+              </p>
+            </div>
+            <div class="slide-content">
+              <div class="role-grid">
+                <article class="panel role-card">
+                  <div class="role-line">
+                    <span class="role-no">[ 1 ]</span>
+                    <h3>승리 조건</h3>
+                  </div>
+                  <p class="role-owner">담당자 <strong>곽태호</strong></p>
+                  <p>
+                    구현 범위
+                    <span>탈출을 하기 위한 장치 및 탈출구 만들기</span>
+                  </p>
+                </article>
+                <article class="panel role-card">
+                  <div class="role-line">
+                    <span class="role-no">[ 2 ]</span>
+                    <h3>플레이어</h3>
+                  </div>
+                  <p class="role-owner">담당자 <strong>김해아</strong></p>
+                  <p>
+                    구현 범위
+                    <span>Unity 맵 안에서 움직임이 구현된 플레이어</span>
+                  </p>
+                </article>
+                <article class="panel role-card">
+                  <div class="role-line">
+                    <span class="role-no">[ 3 ]</span>
+                    <h3>적 AI</h3>
+                  </div>
+                  <p class="role-owner">담당자 <strong>이현석</strong></p>
+                  <p>
+                    구현 범위 <span>플레이어를 인지하며 이동하는 적 구현</span>
+                  </p>
+                </article>
+                <article class="panel role-card">
+                  <div class="role-line">
+                    <span class="role-no">[ 4 ]</span>
+                    <h3>UI</h3>
+                  </div>
+                  <p class="role-owner">담당자 <strong>김세환</strong></p>
+                  <p>구현 범위 <span>Unity 내 기본 GUI 세팅</span></p>
+                </article>
+                <article class="panel role-card">
+                  <div class="role-line">
+                    <span class="role-no">[ 5 ]</span>
+                    <h3>그래픽</h3>
+                  </div>
+                  <p class="role-owner">담당자 <strong>이태윤</strong></p>
+                  <p>
+                    구현 범위
+                    <span>레퍼런스를 참고하여 오브젝트 시안 제작</span>
+                  </p>
+                </article>
+                <article class="panel role-card">
+                  <div class="role-line">
+                    <span class="role-no">[ 6 ]</span>
+                    <h3>사운드</h3>
+                  </div>
+                  <p class="role-owner">담당자 <strong>박종빈</strong></p>
+                  <p>
+                    구현 범위
+                    <span>소리 에셋의 네이밍 규칙 설정 및 GitHub 업로드</span>
+                  </p>
+                </article>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>MVP</span>
+            </div>
+          </section>
+          <section aria-labelledby="ttl-goal" class="slide" hidden="" id="goal">
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >05 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-goal">승리 조건</h1>
+              <p>장치 4개를 활성화하여 탈출구를 열고 밖으로 탈출합니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="two-column" style="--left: 1.58fr">
+                <div class="media-box primary-media" data-no-next="">
+                  <video
+                    class="media-element"
+                    controls=""
+                    playsinline=""
+                    preload="metadata"
+                    src="./video/game_clear_01.mp4"
+                  ></video>
+                </div>
+                <div class="right-stack">
+                  <div class="concept-box">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 460 170"
+                      viewbox="0 0 420 160"
+                    >
+                      <g
+                        fill="none"
+                        stroke="#82ac91"
+                        stroke-linecap="round"
+                        stroke-width="3"
+                      >
+                        <path d="M70 82H396" stroke-dasharray="5 9"></path>
+                        <rect
+                          height="66"
+                          rx="12"
+                          width="70"
+                          x="7"
+                          y="49"
+                        ></rect>
+                        <rect
+                          height="66"
+                          rx="12"
+                          width="65"
+                          x="389"
+                          y="49"
+                        ></rect>
+                      </g>
+                      <path
+                        d="M398 69L410 82L398 95"
+                        fill="none"
+                        stroke="#bddf7d"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="5"
+                      ></path>
+                      <g fill="#cfee86" stroke="#a4c56f" stroke-width="2">
+                        <rect
+                          height="41"
+                          rx="9"
+                          width="41"
+                          x="102"
+                          y="63"
+                        ></rect>
+                        <rect
+                          height="41"
+                          rx="9"
+                          width="41"
+                          x="167"
+                          y="63"
+                        ></rect>
+                        <rect
+                          height="41"
+                          rx="9"
+                          width="41"
+                          x="232"
+                          y="63"
+                        ></rect>
+                        <rect
+                          height="41"
+                          rx="9"
+                          width="41"
+                          x="297"
+                          y="63"
+                        ></rect>
+                      </g>
+                      <g
+                        fill="#254332"
+                        font-size="21"
+                        font-weight="800"
+                        text-anchor="middle"
+                      >
+                        <text x="122.5" y="90">1</text>
+                        <text x="187.5" y="90">2</text>
+                        <text x="252.5" y="90">3</text>
+                        <text x="317.5" y="90">4</text>
+                      </g>
+                      <g fill="#759383" font-size="12" font-weight="700">
+                        <text x="14" y="141">BATTERY</text>
+                        <text x="393" y="141">EXIT</text>
+                      </g>
+                    </svg>
+                    <div class="concept-label">BATTERY → 4개의 장치 → EXIT</div>
+                  </div>
+                  <article class="panel">
+                    <h3>만든 내용</h3>
+                    <p>E키를 누르고 있으면 탈출 장치 게이지가 상승합니다.</p>
+                    <p>4개를 모두 활성화하면 탈출구가 열립니다.</p>
+                    <p>배터리를 모아 장치에 넣어야 작동합니다.</p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>GOAL</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-player"
+            class="slide"
+            hidden=""
+            id="player"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >06 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-player">플레이어 조작</h1>
+              <p>이동과 상호작용을 위한 기본 조작 구조를 구현했습니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="two-column" style="--left: 1.52fr">
+                <div class="media-box primary-media" data-no-next="">
+                  <video
+                    class="media-element"
+                    controls=""
+                    playsinline=""
+                    preload="metadata"
+                    src="./video/game_player_01.mp4"
+                  ></video>
+                </div>
+                <div class="right-stack">
+                  <div class="panel mini-table-panel" data-no-next="">
+                    <h3>조작 목록</h3>
+                    <table class="compact-table">
+                      <thead>
+                        <tr>
+                          <th>조작</th>
+                          <th>키</th>
+                          <th>동작</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>이동</td>
+                          <td><kbd>WASD</kbd></td>
+                          <td>상하좌우 이동</td>
+                        </tr>
+                        <tr>
+                          <td>달리기 / 앉기</td>
+                          <td><kbd>Shift / Ctrl</kbd></td>
+                          <td>1.8배 이동 / 자세를 낮춰 환풍구 진입</td>
+                        </tr>
+                        <tr>
+                          <td>상호작용 / 버리기</td>
+                          <td><kbd>E / F</kbd></td>
+                          <td>줍기·문 열기 / 소지품 버리기</td>
+                        </tr>
+                        <tr>
+                          <td>아이템 선택</td>
+                          <td><kbd>1~3 / 0</kbd></td>
+                          <td>아이템 선택 / 맨손 전환</td>
+                        </tr>
+                        <tr>
+                          <td>메뉴 / 확인</td>
+                          <td><kbd>Esc / Enter</kbd></td>
+                          <td>메뉴 열기·종료 / 선택 확인</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <article class="panel mini-panel">
+                    <h3>제작 의도 · 향후 개선</h3>
+                    <p>
+                      이동, 아이템 습득, 문과 장치의 상호작용을 공통 구조로
+                      구현했습니다.
+                    </p>
+                    <p>
+                      기믹과 QTE를 연결하면서 조작 안내를 조정할 예정입니다.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>PLAYER</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-enemy"
+            class="slide"
+            hidden=""
+            id="enemy"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >07 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-enemy">적 이동과 추격</h1>
+              <p>순찰하다가 플레이어를 발견하면 추격합니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="two-column" style="--left: 1.57fr">
+                <div class="media-box primary-media" data-no-next="">
+                  <video
+                    class="media-element"
+                    controls=""
+                    playsinline=""
+                    preload="metadata"
+                    src="./video/game_enemy_01.mp4"
+                  ></video>
+                </div>
+                <div class="right-stack">
+                  <article class="panel patrol-panel">
+                    <div class="patrol-image">
+                      <svg aria-hidden="true" viewbox="0 0 420 120">
+                        <g
+                          fill="none"
+                          stroke="#9bb8ac"
+                          stroke-linejoin="round"
+                          stroke-width="4"
+                        >
+                          <path
+                            d="M20 15H145V53H192V14H398V105H255V74H172V105H20Z"
+                          ></path>
+                          <path d="M90 15V64H20M308 14V50H398"></path>
+                        </g>
+                        <path
+                          d="M53 84Q119 46 174 80T355 65"
+                          fill="none"
+                          stroke="#c5ec74"
+                          stroke-dasharray="9 8"
+                          stroke-width="4"
+                        ></path>
+                        <circle cx="53" cy="84" fill="#ec906d" r="13"></circle>
+                        <circle cx="355" cy="65" fill="#c5ec74" r="13"></circle>
+                        <g
+                          fill="#aecfbd"
+                          font-family="sans-serif"
+                          font-size="12"
+                        >
+                          <text x="39" y="112">AI</text>
+                          <text x="325" y="98">PLAYER</text>
+                        </g></svg
+                      ><span>AI MOVEMENT · 시각 자료 삽입 영역</span>
+                    </div>
+                    <h3>기본 이동 로직</h3>
+                    <ol class="steps">
+                      <li>벽을 인지하며 랜덤 방향으로 순찰합니다.</li>
+                      <li>플레이어를 발견하면 추격을 시작합니다.</li>
+                      <li>
+                        추격 조건(시야 또는 심박수)에서 5초 이상 벗어나면
+                        중단합니다.
+                      </li>
+                    </ol>
+                  </article>
+                  <article class="panel mini-panel">
+                    <h3>개선 검토</h3>
+                    <p>
+                      레이캐스트 기반 감지로 조정하고, 뒤쪽의 좁은 감지 범위로
+                      매우 가까운 플레이어를 알아채는 기능을 검토합니다.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>ENEMY</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-enemy-special"
+            class="slide"
+            hidden=""
+            id="enemy-special"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >08 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-enemy-special">
+                특수 적 <em class="accent-word">/ 손전등 경직형</em>
+              </h1>
+              <p>
+                기본 적보다 빠르고, 플레이어의 심박수에 반응하는 특수 적입니다.
+              </p>
+            </div>
+            <div class="slide-content">
+              <div class="two-column" style="--left: 1.45fr">
+                <div class="media-box primary-media" data-no-next="">
+                  <img
+                    alt="특수 적 컨셉 이미지"
+                    class="media-element"
+                    loading="lazy"
+                    src="./image/game_enemy_special.png"
+                  />
+                </div>
+                <div class="right-stack">
+                  <article class="panel">
+                    <h3>핵심 특징</h3>
+                    <p>
+                      기본 이동 속도가 플레이어보다 훨씬 빠르며 심박수가
+                      오를수록 더 빨라집니다.
+                    </p>
+                    <p>
+                      <strong
+                        >손전등을 비추고 있는 동안은 움직이지 못합니다.</strong
+                      >
+                    </p>
+                  </article>
+                  <article class="panel special-details">
+                    <div class="detail">
+                      <strong>평상시</strong>
+                      <p>
+                        지정된 지점을 순찰하며, 장애물에 가로막히지 않은
+                        플레이어를 레이캐스트로 감지합니다.
+                      </p>
+                    </div>
+                    <div class="detail">
+                      <strong>추격 및 대처</strong>
+                      <p>
+                        적 시야에서 5초 이상 벗어나야 합니다. 손전등으로 멈춘
+                        사이 도망치거나 캐비닛에 숨습니다.
+                      </p>
+                    </div>
+                    <div class="detail">
+                      <strong>심박수</strong>
+                      <p>
+                        적을 바라보면 상승하며, 높을수록 적이 빨라집니다. 캐비닛
+                        안에서는 심박수와 관계없이 발각되지 않습니다.
+                      </p>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>ENEMY / SPECIAL</span>
+            </div>
+          </section>
+          <section aria-labelledby="ttl-ui" class="slide" hidden="" id="ui">
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >09 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-ui">UI 구성과 피드백</h1>
+              <p>항상 보이는 정보와 순간적인 안내를 구분합니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="two-column" style="--left: 1.56fr">
+                <div class="media-box primary-media" data-no-next="">
+                  <video
+                    class="media-element"
+                    controls=""
+                    playsinline=""
+                    preload="metadata"
+                    src="./video/game_ui_01.mp4"
+                  ></video>
+                </div>
+                <div class="right-stack">
+                  <article class="panel big-panel">
+                    <h3>화면에 표시되는 정보</h3>
+                    <div class="detail">
+                      <strong>HUD · 항상 보이는 UI</strong>
+                      <p>체력과 심박수 등 현재 상태를 확인합니다.</p>
+                    </div>
+                    <div class="detail">
+                      <strong>순간적인 안내</strong>
+                      <p>상호작용이나 이벤트가 발생하는 시점에 표시합니다.</p>
+                    </div>
+                    <div class="detail">
+                      <strong>상태에 대한 피드백</strong>
+                      <p>체력이 줄면 심박수가 오르고 박동 소리가 빨라집니다.</p>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>UI</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-graphic-direction"
+            class="slide tone-horror"
+            hidden=""
+            id="graphic-direction"
+          >
+            <div aria-hidden="true" class="art-preview-backdrop"></div>
+            <div aria-hidden="true" class="art-preview-scrim"></div>
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >10 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-graphic-direction">그래픽 분위기와 색상</h1>
+              <p>차가운 폐병원 · PS1 레트로 호러 · 명확한 실루엣</p>
+            </div>
+            <div class="slide-content">
+              <div class="horror-layout">
+                <div class="horror-statement">
+                  <div class="outline-label">ART DIRECTION / 01</div>
+                  <div class="big-horror">
+                    LOW POLY<br /><em>RETRO HORROR</em>
+                  </div>
+                  <p>빛과 어둠, 제한된 색상으로 공간의 긴장감을 만듭니다.</p>
+                  <button
+                    aria-label="그래픽 배경 원본 이미지 보기"
+                    aria-pressed="false"
+                    class="backdrop-preview"
+                    id="backdrop-preview"
+                    type="button"
+                  >
+                    배경 이미지 선명하게 보기
+                  </button>
+                </div>
+                <div class="right-stack">
+                  <article class="panel horror-panel">
+                    <h3>게임 그래픽 팔레트</h3>
+                    <div class="game-palette-list">
+                      <div class="palette-item">
+                        <span
+                          class="color-chip"
+                          style="background: #9e988e"
+                        ></span
+                        ><span class="palette-share">60%</span
+                        ><span class="palette-name">낡은 오프화이트</span
+                        ><code>#9e988e</code>
+                      </div>
+                      <div class="palette-item">
+                        <span
+                          class="color-chip"
+                          style="background: #374f4c"
+                        ></span
+                        ><span class="palette-share">30%</span
+                        ><span class="palette-name">바랜 청록</span
+                        ><code>#374f4c</code>
+                      </div>
+                      <div class="palette-item">
+                        <span
+                          class="color-chip"
+                          style="background: #2c3136"
+                        ></span
+                        ><span class="palette-share">기본</span
+                        ><span class="palette-name">짙은 회색</span
+                        ><code>#2c3136</code>
+                      </div>
+                      <div class="palette-item">
+                        <span
+                          class="color-chip"
+                          style="background: #8c252b"
+                        ></span
+                        ><span class="palette-share">강조</span
+                        ><span class="palette-name">경고 적색</span
+                        ><code>#8c252b</code>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="panel horror-panel">
+                    <h3>분위기와 표현 기준</h3>
+                    <p>
+                      불법 실험실을 연상시키는 폐병원에 차가운 형광등과 낮은
+                      채도를 사용합니다.
+                    </p>
+                    <p>
+                      작은 장식을 줄이고 큰 색면과 단순한 로우폴리 형상으로
+                      공간을 읽기 쉽게 표현합니다.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>GRAPHIC / DIRECTION</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-graphic-reference"
+            class="slide tone-horror"
+            hidden=""
+            id="graphic-reference"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >11 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-graphic-reference">그래픽 레퍼런스 · 작품</h1>
+              <p>단순한 형상과 강한 실루엣을 참고했습니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="horror-layout ref-horror">
+                <div class="stacked-reference">
+                  <article class="horror-ref panel">
+                    <div class="media-box" data-no-next="">
+                      <img
+                        alt="I Am Your Beast 참조 이미지"
+                        class="media-element"
+                        loading="lazy"
+                        src="./image/i_am_your_beast_ref.jpg"
+                      />
+                    </div>
+                    <div>
+                      <h3>I Am Your Beast</h3>
+                      <p>
+                        각진 바위, 큰 명암 덩어리, 넓은 색면으로 공간을 구분하는
+                        표현을 참고합니다.
+                      </p>
+                    </div>
+                  </article>
+                  <article class="horror-ref panel">
+                    <div class="media-box" data-no-next="">
+                      <img
+                        alt="Risk of Rain 2 참조 이미지"
+                        class="media-element"
+                        loading="lazy"
+                        src="./image/risk_of_rain_ref.jpg"
+                      />
+                    </div>
+                    <div>
+                      <h3>Risk of Rain 2</h3>
+                      <p>
+                        단순한 구조물과 넓은 색면, 실루엣 및 거리감 표현을
+                        참고합니다.
+                      </p>
+                    </div>
+                  </article>
+                </div>
+                <div class="right-stack">
+                  <article class="panel horror-panel">
+                    <div
+                      aria-label="로우폴리 형태와 색면을 표현하는 참조 도형. 이미지 교체 가능한 영역"
+                      class="common-visual-slot"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        preserveaspectratio="xMidYMid slice"
+                        viewbox="0 0 480 210"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <defs>
+                          <lineargradient
+                            id="slotGradient"
+                            x1="0"
+                            x2="1"
+                            y1="0"
+                            y2="1"
+                          >
+                            <stop stop-color="#294239"></stop>
+                            <stop offset="1" stop-color="#101c1b"></stop>
+                          </lineargradient>
+                        </defs>
+                        <rect
+                          fill="url(#slotGradient)"
+                          height="210"
+                          width="480"
+                        ></rect>
+                        <circle
+                          cx="375"
+                          cy="50"
+                          fill="none"
+                          opacity=".3"
+                          r="64"
+                          stroke="#8cae9c"
+                          stroke-width="1"
+                        ></circle>
+                        <path
+                          d="M0 180 L90 80 L153 118 L212 35 L275 104 L348 60 L480 160 L480 210 L0 210Z"
+                          fill="#647d6c"
+                        ></path>
+                        <path
+                          d="M0 180 L90 80 L153 118 L130 210 L0 210Z"
+                          fill="#94aa8d"
+                        ></path>
+                        <path
+                          d="M153 118 L212 35 L275 104 L250 210 L130 210Z"
+                          fill="#405a52"
+                        ></path>
+                        <path
+                          d="M275 104 L348 60 L480 160 L480 210 L250 210Z"
+                          fill="#799684"
+                        ></path>
+                        <path
+                          d="M90 80 L120 111 L153 118 L130 210"
+                          fill="none"
+                          opacity=".65"
+                          stroke="#cae0bb"
+                          stroke-width="2"
+                        ></path>
+                        <path
+                          d="M212 35 L250 104 L275 104"
+                          fill="none"
+                          opacity=".65"
+                          stroke="#cae0bb"
+                          stroke-width="2"
+                        ></path>
+                        <path
+                          d="M0 196 L480 196"
+                          opacity=".25"
+                          stroke="#aac6ae"
+                          stroke-width="1"
+                        ></path>
+                      </svg>
+                    </div>
+                    <h3>공통적인 시각 언어</h3>
+                    <div class="visual-tags">
+                      <span>LOW POLY</span><span>FLAT COLOR</span
+                      ><span>SILHOUETTE</span><span>DEPTH</span>
+                    </div>
+                    <p>
+                      복잡한 표면보다 물체의 형태와 색면의 대비를 우선합니다.
+                    </p>
+                  </article>
+                  <article class="panel horror-panel mini-panel">
+                    <h3>DEAD SIGNAL에 적용</h3>
+                    <p>
+                      PS1 레트로 호러의 절제된 저해상도 질감과 낡은 공간 표현을
+                      결합합니다.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>GRAPHIC / REFERENCE</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-graphic-reference-detail"
+            class="slide tone-horror"
+            hidden=""
+            id="graphic-reference-detail"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >12 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-graphic-reference-detail">
+                그래픽 레퍼런스 · 제작 기준
+              </h1>
+              <p>공간 모듈과 재질을 제작하는 방식입니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="horror-layout ref-horror">
+                <div class="stacked-reference mesh-stack">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="바닥 벽 문 의료 소품 레퍼런스"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_reference_mesh_01.png"
+                    />
+                  </div>
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="기둥 천장 휠체어 레퍼런스"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_reference_mesh_02.png"
+                    />
+                  </div>
+                </div>
+                <div class="right-stack">
+                  <article class="panel horror-panel">
+                    <h3>지오메트리 · 질감과 채색</h3>
+                    <div class="detail">
+                      <strong>형상</strong>
+                      <p>
+                        각진 로우폴리 형태, 넓은 평면, 명확한 실루엣.
+                        벽·바닥·기둥·문을 반복 가능한 모듈로 제작합니다.
+                      </p>
+                    </div>
+                    <div class="detail">
+                      <strong>채색</strong>
+                      <p>
+                        낮은 채도의 병원 색상과 큰 얼룩 위주로 표현합니다.
+                        잔무늬와 강한 광택은 줄입니다.
+                      </p>
+                    </div>
+                  </article>
+                  <article class="panel horror-panel">
+                    <h3>생성용 이미지와 제작 과정</h3>
+                    <p>
+                      콘셉트 이미지는 분위기, 메시 레퍼런스는 개별 물체의 형태를
+                      정의합니다.
+                    </p>
+                    <div class="pipeline">
+                      CONCEPT <b>→</b> MESHY <b>→</b> BLENDER <b>→</b> UNITY
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>GRAPHIC / REFERENCE / DETAIL</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-graphic"
+            class="slide"
+            hidden=""
+            id="graphic"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >13 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-graphic">그래픽 제작</h1>
+              <p>레퍼런스를 바탕으로 실제 제작한 오브젝트입니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="artwork-scroller" data-no-next="">
+                <article class="panel artwork-card">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="링거대"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_object_01.png"
+                    />
+                  </div>
+                  <div>
+                    <h3>링거대</h3>
+                    <p>게임 내 충돌 오브젝트</p>
+                  </div>
+                </article>
+                <article class="panel artwork-card">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="병원 침대"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_object_02.png"
+                    />
+                  </div>
+                  <div>
+                    <h3>병원 침대</h3>
+                    <p>게임 내 충돌 오브젝트</p>
+                  </div>
+                </article>
+                <article class="panel artwork-card">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="수술 가림막"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_object_03.png"
+                    />
+                  </div>
+                  <div>
+                    <h3>수술 가림막</h3>
+                    <p>게임 내 충돌 오브젝트</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>GRAPHIC</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-sound"
+            class="slide"
+            hidden=""
+            id="sound"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >14 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-sound">사운드 구성</h1>
+              <p>용도에 따라 분류하고 시연 가능한 음원을 배치했습니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="sound-layout">
+                <div class="panel sound-table">
+                  <h3>사운드 사용 목록</h3>
+                  <table class="compact-table">
+                    <thead>
+                      <tr>
+                        <th>소리</th>
+                        <th>사용 상황</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>메인 타이틀 BGM</td>
+                        <td>게임 시작 후 메인 화면</td>
+                      </tr>
+                      <tr>
+                        <td>적 추격 시작 BGM</td>
+                        <td>적이 추격을 시작할 때</td>
+                      </tr>
+                      <tr>
+                        <td>환경음</td>
+                        <td>기본 엠비언트 음향</td>
+                      </tr>
+                      <tr>
+                        <td>심장 박동 소리</td>
+                        <td>적이 근처에 있을 때</td>
+                      </tr>
+                      <tr>
+                        <td>거친 숨 소리</td>
+                        <td>달리거나 추격에서 벗어났을 때</td>
+                      </tr>
+                      <tr>
+                        <td>발소리</td>
+                        <td>플레이어가 이동할 때</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="sound-grid">
+                  <div class="sound-tile">
+                    <div class="sound-index">01</div>
+                    <div>
+                      <strong>메인 타이틀 BGM</strong
+                      ><small>게임 시작 후 메인 화면</small>
+                    </div>
+                    <audio
+                      controls=""
+                      preload="none"
+                      src="./sound/bgm_title_main.wav"
+                    ></audio>
+                  </div>
+                  <div class="sound-tile">
+                    <div class="sound-index">02</div>
+                    <div>
+                      <strong>적 추격 시작 BGM</strong
+                      ><small>적이 추격을 시작할 때</small>
+                    </div>
+                    <audio
+                      controls=""
+                      preload="none"
+                      src="./sound/bgm_chase.wav"
+                    ></audio>
+                  </div>
+                  <div class="sound-tile">
+                    <div class="sound-index">03</div>
+                    <div>
+                      <strong>환경음</strong><small>기본 엠비언트 음향</small>
+                    </div>
+                    <audio
+                      controls=""
+                      preload="none"
+                      src="./sound/amb_white_noise%201.wav"
+                    ></audio>
+                  </div>
+                  <div class="sound-tile">
+                    <div class="sound-index">04</div>
+                    <div>
+                      <strong>심장 박동 소리</strong
+                      ><small>적이 근처에 있을 때</small>
+                    </div>
+                    <audio
+                      controls=""
+                      preload="none"
+                      src="./sound/sfx_player_heartbeat.wav"
+                    ></audio>
+                  </div>
+                  <div class="sound-tile">
+                    <div class="sound-index">05</div>
+                    <div>
+                      <strong>거친 숨 소리</strong
+                      ><small>달리거나 추격에서 벗어났을 때</small>
+                    </div>
+                    <audio
+                      controls=""
+                      preload="none"
+                      src="./sound/SFX_Player_Breath_Heavy_Loop_01.wav"
+                    ></audio>
+                  </div>
+                  <div class="sound-tile">
+                    <div class="sound-index">06</div>
+                    <div>
+                      <strong>발소리</strong><small>플레이어가 이동할 때</small>
+                    </div>
+                    <audio
+                      controls=""
+                      preload="none"
+                      src="./sound/sfx_player_footstep_run.wav"
+                    ></audio>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>SOUND</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-sound-process"
+            class="slide"
+            hidden=""
+            id="sound-process"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >15 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-sound-process">사운드를 합치면</h1>
+              <p>환경음과 효과음이 하나의 장면에서 겹치는 구성을 보여줍니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="sound-process-layout">
+                <div class="panel audio-wave-panel sound-process-image">
+                  <img
+                    alt="사운드 트랙 이미지"
+                    class="media-element"
+                    loading="lazy"
+                    src="./image/audio_track.png"
+                  />
+                </div>
+                <div class="sound-process-bottom">
+                  <article class="panel sound-demo">
+                    <h3>종합 사운드 재생</h3>
+                    <p>환경음·발소리·추격음이 함께 들리는 시연 음원입니다.</p>
+                    <audio
+                      controls=""
+                      preload="none"
+                      src="./sound/sound_track.m4a"
+                    ></audio>
+                  </article>
+                  <article class="panel mini-panel">
+                    <h3>파일 네이밍 규칙</h3>
+                    <p>
+                      용도에 따라 BGM / AMB / SFX로 분류해 재생 상황과 방식을
+                      표현했습니다.
+                    </p>
+                    <div class="code-chip">sfx_player_footstep_run.wav</div>
+                    <p class="smalltext">
+                      [분류_대상_행동·상태_번호] · Loop / OneShot<br />Freesound
+                      · Sonniss GDC Audio Bundle
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>SOUND / PROCESS</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-build"
+            class="slide"
+            hidden=""
+            id="build"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >16 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-build">통합 플레이</h1>
+              <p>각자 제작한 기능을 하나로 합쳤을 때의 예상 화면입니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="wide-media-layout">
+                <div class="media-box wide-media" data-no-next="">
+                  <img
+                    alt="통합 플레이 이미지"
+                    class="media-element"
+                    loading="lazy"
+                    src="./image/game_marge.png"
+                  />
+                </div>
+                <div class="experience-overlay compact-overlay">
+                  <span class="kicker">INTEGRATION</span>
+                  <h2>각 요소를<br />하나의 플레이로.</h2>
+                </div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>BUILD</span>
+            </div>
+          </section>
+          <section aria-labelledby="ttl-next" class="slide" hidden="" id="next">
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >17 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-next">앞으로 할 것</h1>
+              <p>다음 테스트를 위해 세 가지 기능을 연결합니다.</p>
+            </div>
+            <div class="slide-content">
+              <div class="next-grid">
+                <article class="panel next-card">
+                  <span class="next-number">01</span>
+                  <h3>심박수와 추격 연결</h3>
+                  <p>심박수 시스템과 플레이어 움직임 연결</p>
+                </article>
+                <article class="panel next-card">
+                  <span class="next-number">02</span>
+                  <h3>QTE 구현</h3>
+                  <p>스킬 체크 미니게임을 상자와 기믹에 연동</p>
+                </article>
+                <article class="panel next-card">
+                  <span class="next-number">03</span>
+                  <h3>손전등 시스템</h3>
+                  <p>
+                    배터리를 손전등 또는 탈출 장치에 사용하도록 선택 구조 구현
+                  </p>
+                </article>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>NEXT</span>
+            </div>
+          </section>
+          <section
+            aria-labelledby="ttl-end"
+            class="slide tone-dark"
+            hidden=""
+            id="end"
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              ><span class="meta-index"
+                >18 <span style="opacity: 0.55">/</span> 18</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-end">감사합니다.</h1>
+              <p>DEAD SIGNAL · 게임개발실습</p>
+            </div>
+            <div class="slide-content">
+              <div class="closing">
+                <div class="closing-mark">DEAD<span>/</span>SIGNAL</div>
+                <div class="closing-bar"></div>
+                <p>TEAM 04 · GAME DEVELOPMENT PRACTICE</p>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span><span>END</span>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <div aria-label="슬라이드 발표 컨트롤" id="toolbar-row">
+      <span class="toolbar-note">← → 이동 · P 재생/정지 · F 전체화면</span>
+      <div class="transport">
+        <button aria-label="이전 슬라이드" id="prev" title="이전" type="button">
+          ‹</button
+        ><span aria-live="polite" class="slide-counter" id="slide-count"
+          >01 / 18</span
+        ><button
+          aria-label="다음 슬라이드"
+          id="next-page"
+          title="다음"
+          type="button"
+        >
+          ›</button
+        ><span class="toolbar-divider"></span
+        ><button
+          aria-pressed="false"
+          class="play-btn"
+          id="autoplay-play"
+          type="button"
+        >
+          ▶ Play</button
+        ><button
+          aria-pressed="true"
+          class="stop-btn"
+          id="autoplay-stop"
+          type="button"
+        >
+          ■ Stop
+        </button>
+        <div class="timer"><span class="timer-progress"></span></div>
+        <button
+          aria-label="전체 화면 토글"
+          id="fullscreen"
+          title="전체 화면"
+          type="button"
+        >
+          ⛶
+        </button>
+      </div>
+    </div>
+    <dialog
+      aria-describedby="modal-intro"
+      aria-labelledby="modal-title"
+      id="reference-modal"
+    >
+      <div class="modal-head">
+        <h2 id="modal-title"></h2>
+        <button id="modal-close" type="button">닫기 ×</button>
+      </div>
+      <p class="modal-intro" id="modal-intro"></p>
+      <div class="modal-screen" id="modal-viewer"></div>
+      <div class="modal-actions">
+        <button id="modal-prev" type="button">← 이전 자료</button
+        ><span class="modal-count" id="modal-count"></span
+        ><button id="modal-next" type="button">다음 자료 →</button>
+      </div>
+    </dialog>
+    <script>
+      (() => {
+        "use strict";
+        const BASE_W = 1440,
+          BASE_H = 810,
+          AUTO_MS = 15000;
+        const shell = document.getElementById("deck-shell"),
+          deck = document.getElementById("deck");
+        const pages = [...document.querySelectorAll(".slide")];
+        const modal = document.getElementById("reference-modal"),
+          modalViewer = document.getElementById("modal-viewer");
+        const playBtn = document.getElementById("autoplay-play"),
+          stopBtn = document.getElementById("autoplay-stop"),
+          timer = document.querySelector(".timer-progress");
+        const count = document.getElementById("slide-count");
+        let current = 0,
+          playing = false,
+          deadline = 0,
+          interval = null,
+          modalAssets = [],
+          modalIndex = 0,
+          modalTrigger = null;
+        function resize() {
+          const bottom = window.innerWidth < 650 ? 69 : 78;
+          const scale = Math.min(
+            (window.innerWidth - 24) / BASE_W,
+            (window.innerHeight - bottom - 14) / BASE_H,
+            1.5,
+          );
+          shell.style.width = `${BASE_W * scale}px`;
+          shell.style.height = `${BASE_H * scale}px`;
+          deck.style.transform = `scale(${scale})`;
+        }
+        function syncPlayback() {
+          playBtn.disabled = playing;
+          stopBtn.disabled = !playing;
+          playBtn.setAttribute("aria-pressed", String(playing));
+          stopBtn.setAttribute("aria-pressed", String(!playing));
+        }
+        function stopPlayback() {
+          playing = false;
+          if (interval !== null) clearInterval(interval);
+          interval = null;
+          timer.style.transform = "scaleX(0)";
+          syncPlayback();
+        }
+        function resetCountdown() {
+          deadline = performance.now() + AUTO_MS;
+          timer.style.transform = "scaleX(0)";
+        }
+        function show(index, hash = true) {
+          const n = Math.max(0, Math.min(index, pages.length - 1));
+          if (n !== current && typeof stopArtPreview === "function")
+            stopArtPreview();
+          pages.forEach((page, i) => {
+            page.hidden = i !== n;
+            if (i !== n)
+              page
+                .querySelectorAll("audio,video")
+                .forEach((media) => media.pause());
+          });
+          current = n;
+          count.textContent = `${String(n + 1).padStart(2, "0")} / ${String(pages.length).padStart(2, "0")}`;
+          document.getElementById("prev").disabled = n === 0;
+          document.getElementById("next-page").disabled =
+            n === pages.length - 1;
+          if (playing) resetCountdown();
+          if (hash) history.replaceState(null, "", "#" + pages[n].id);
+          const focus = document.activeElement;
+          if (focus?.closest(".slide") && focus.closest(".slide") !== pages[n])
+            document.getElementById("next-page").focus({ preventScroll: true });
+        }
+        function tick() {
+          if (!playing) return;
+          if (document.hidden || modal.open) {
+            stopPlayback();
+            return;
+          }
+          const fraction = Math.max(
+            0,
+            Math.min(1, 1 - (deadline - performance.now()) / AUTO_MS),
+          );
+          timer.style.transform = `scaleX(${fraction})`;
+          if (fraction < 1) return;
+          if (current === pages.length - 1) {
+            stopPlayback();
+            return;
+          }
+          show(current + 1);
+        }
+        function play() {
+          if (playing) return;
+          if (current === pages.length - 1) show(0);
+          playing = true;
+          resetCountdown();
+          interval = setInterval(tick, 60);
+          syncPlayback();
+        }
+        playBtn.addEventListener("click", play);
+        stopBtn.addEventListener("click", stopPlayback);
+        document
+          .getElementById("prev")
+          .addEventListener("click", () => show(current - 1));
+        document
+          .getElementById("next-page")
+          .addEventListener("click", () => show(current + 1));
+        document.getElementById("fullscreen").addEventListener("click", () => {
+          if (document.fullscreenElement) document.exitFullscreen?.();
+          else document.documentElement.requestFullscreen?.();
+        });
+        function fromHash() {
+          const i = pages.findIndex((p) => "#" + p.id === location.hash);
+          show(i < 0 ? 0 : i, false);
+        }
+        window.addEventListener("hashchange", fromHash);
+        window.addEventListener("resize", resize);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) stopPlayback();
+        });
+        function showRef(index) {
+          const m = modalAssets[index];
+          if (!m) return;
+          modalViewer.querySelectorAll("video").forEach((v) => v.pause());
+          modalViewer.replaceChildren();
+          modalIndex = index;
+          const clone = m.cloneNode(true);
+          clone.hidden = false;
+          clone.removeAttribute("style");
+          clone.className = "";
+          if (clone.tagName === "VIDEO") {
+            clone.controls = true;
+            clone.muted = false;
+            clone.preload = "metadata";
+          }
+          clone.addEventListener(
+            "error",
+            () => {
+              modalViewer.textContent =
+                "미디어를 불러올 수 없습니다. GitHub의 image/video 폴더를 확인해 주세요.";
+            },
+            { once: true },
+          );
+          modalViewer.appendChild(clone);
+          document.getElementById("modal-count").textContent =
+            `${index + 1} / ${modalAssets.length}`;
+          document.getElementById("modal-prev").disabled = index === 0;
+          document.getElementById("modal-next").disabled =
+            index === modalAssets.length - 1;
+        }
+        for (const card of document.querySelectorAll(".reference-card")) {
+          const open = () => {
+            stopPlayback();
+            modalTrigger = card;
+            modalAssets = [...card.querySelectorAll("img,video")];
+            document.getElementById("modal-title").textContent =
+              card.querySelector("h3")?.textContent || "참고 자료";
+            document.getElementById("modal-intro").textContent =
+              card.querySelector("p")?.textContent || "";
+            card.querySelectorAll("video").forEach((v) => v.pause());
+            showRef(0);
+            modal.showModal();
+          };
+          card.addEventListener("click", open);
+          card.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              open();
+            }
+          });
+        }
+        document
+          .getElementById("modal-close")
+          .addEventListener("click", () => modal.close());
+        document
+          .getElementById("modal-prev")
+          .addEventListener("click", () => showRef(modalIndex - 1));
+        document
+          .getElementById("modal-next")
+          .addEventListener("click", () => showRef(modalIndex + 1));
+        modal.addEventListener("close", () => {
+          modalViewer.querySelectorAll("video").forEach((v) => v.pause());
+          modalViewer.replaceChildren();
+          modalTrigger?.focus();
+        });
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) modal.close();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (modal.open) {
+            if (e.key === "Escape") modal.close();
+            if (e.target.closest("video")) return;
+            if (e.key === "ArrowRight" && modalIndex < modalAssets.length - 1) {
+              e.preventDefault();
+              showRef(modalIndex + 1);
+            }
+            if (e.key === "ArrowLeft" && modalIndex > 0) {
+              e.preventDefault();
+              showRef(modalIndex - 1);
+            }
+            return;
+          }
+          if (
+            e.altKey ||
+            e.ctrlKey ||
+            e.metaKey ||
+            e.target.closest(
+              "input,textarea,select,button,a,video,audio,[contenteditable]",
+            )
+          )
+            return;
+          if (["ArrowRight", "PageDown", " "].includes(e.key)) {
+            e.preventDefault();
+            show(current + 1);
+          } else if (["ArrowLeft", "PageUp"].includes(e.key)) {
+            e.preventDefault();
+            show(current - 1);
+          } else if (e.key === "Home") {
+            e.preventDefault();
+            show(0);
+          } else if (e.key === "End") {
+            e.preventDefault();
+            show(pages.length - 1);
+          } else if (e.key.toLowerCase() === "p") {
+            e.preventDefault();
+            playing ? stopPlayback() : play();
+          } else if (e.key.toLowerCase() === "s") {
+            stopPlayback();
+          } else if (e.key.toLowerCase() === "f") {
+            document.getElementById("fullscreen").click();
+          }
+        });
+        // Avoid unexpected slide changes when the user interacts with presentation media.
+        document.addEventListener(
+          "play",
+          (e) => {
+            if (!e.target.matches("audio,video")) return;
+            stopPlayback();
+            document.querySelectorAll("audio,video").forEach((m) => {
+              if (m !== e.target) m.pause();
+            });
+          },
+          true,
+        );
+        // Failed remote assets receive a neutral placeholder, while original src values remain unchanged.
+        for (const image of document.querySelectorAll(".slide img")) {
+          function fallback() {
+            if (
+              image.dataset.missing ||
+              image.classList.contains("modal-extra")
+            )
+              return;
+            image.dataset.missing = "true";
+            const box = image.closest(
+              ".media-box,.reference-image,.audio-wave-panel",
+            );
+            if (!box) return;
+            const p = document.createElement("span");
+            p.className =
+              "asset-fallback" +
+              (box.closest(".tone-horror") ? " horror-fallback" : "");
+            p.textContent = "이미지 준비 중";
+            box.appendChild(p);
+          }
+          image.addEventListener("error", fallback, { once: true });
+          if (image.complete && image.naturalWidth === 0) fallback();
+        }
+        for (const vid of document.querySelectorAll(".slide video")) {
+          vid.addEventListener("error", () => {
+            const box = vid.closest(".media-box,.reference-image");
+            if (!box || box.querySelector(".asset-fallback")) return;
+            const p = document.createElement("span");
+            p.className = "asset-fallback";
+            p.textContent = "영상 파일을 확인해 주세요";
+            box.appendChild(p);
+          });
+        }
+
+        // Reuse the source as a blurred backing layer, without changing src or cropping the original.
+        for (const img of document.querySelectorAll(
+          ".slide .media-box img.media-element, .slide .reference-image img.media-element, .slide .audio-wave-panel img.media-element",
+        )) {
+          const host = img.closest(
+            ".media-box,.reference-image,.audio-wave-panel",
+          );
+          if (!host) continue;
+          const url = img.getAttribute("src");
+          if (url) {
+            host.style.setProperty(
+              "--media-background",
+              `url(${JSON.stringify(url)})`,
+            );
+            host.classList.add("has-image-art");
+          }
+        }
+        // Art background preview: a click removes the blur; the next deliberate mouse movement restores it.
+        const artSlide = document.getElementById("graphic-direction"),
+          artButton = document.getElementById("backdrop-preview");
+        let artPointerOrigin = null,
+          artPreviewTimeout = null;
+        function stopArtPreview() {
+          if (!artSlide.classList.contains("is-art-preview")) return;
+          artSlide.classList.remove("is-art-preview");
+          artButton.setAttribute("aria-pressed", "false");
+          if (artPreviewTimeout !== null) clearTimeout(artPreviewTimeout);
+          artPreviewTimeout = null;
+          artPointerOrigin = null;
+        }
+        artButton.addEventListener("click", (e) => {
+          if (artPreviewTimeout !== null) clearTimeout(artPreviewTimeout);
+          artPointerOrigin = { x: e.clientX, y: e.clientY };
+          artSlide.classList.add("is-art-preview");
+          artButton.setAttribute("aria-pressed", "true");
+          artPreviewTimeout = setTimeout(stopArtPreview, 8500);
+        });
+        document.addEventListener(
+          "pointermove",
+          (e) => {
+            if (
+              !artSlide.classList.contains("is-art-preview") ||
+              !artPointerOrigin
+            )
+              return;
+            if (
+              Math.hypot(
+                e.clientX - artPointerOrigin.x,
+                e.clientY - artPointerOrigin.y,
+              ) > 14
+            )
+              stopArtPreview();
+          },
+          { passive: true },
+        );
+        artSlide.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") stopArtPreview();
+        });
+
+        resize();
+        fromHash();
+        syncPlayback();
+      })();
+    </script>
+  </body>
+</html>
