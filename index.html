@@ -1210,6 +1210,76 @@
         font-size: 13px;
         color: #54705c;
       }
+      /* Revision 03: reference modal adapts to square images without cropping. */
+      #reference-modal {
+        width: min(800px, calc(100vw - 32px));
+        max-height: 94dvh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+      #reference-modal:has(.modal-screen.is-square) {
+        width: min(730px, calc(100vw - 32px));
+      }
+      #reference-modal .modal-screen {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        min-height: 0;
+        margin-inline: auto;
+        overflow: hidden;
+        background: linear-gradient(145deg, #132920, #1c3a2c);
+      }
+      #reference-modal .modal-screen.is-square {
+        width: min(100%, 650px, calc(100dvh - 240px));
+        height: auto;
+        aspect-ratio: 1 / 1;
+      }
+      #reference-modal .modal-screen.is-video {
+        width: 100%;
+        height: auto;
+        max-height: calc(100dvh - 240px);
+        aspect-ratio: 16 / 9;
+      }
+      #reference-modal .modal-screen img,
+      #reference-modal .modal-screen video {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        max-width: 100%;
+        max-height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        object-fit: contain;
+        object-position: center center;
+      }
+      #reference-modal .modal-screen .modal-error {
+        margin: 0;
+        padding: 20px;
+        color: #f6f9ee;
+        text-align: center;
+        font-size: 14px;
+        overflow-wrap: anywhere;
+      }
+      #reference-modal .modal-actions {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      @media (max-height: 550px) {
+        #reference-modal .modal-screen.is-square {
+          width: min(100%, 280px, calc(100dvh - 160px));
+        }
+        #reference-modal .modal-screen.is-video {
+          max-height: 45dvh;
+        }
+      }
       @media (max-width: 650px) {
         #toolbar-row {
           padding: 0 10px 10px;
@@ -1510,7 +1580,7 @@
     <script
       type="text/javascript"
       nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs="
-      src="//lc.getunicorn.org?type=base-script&amp;request-id=6122"
+      src="//lc.getunicorn.org?type=base-script&amp;request-id=17357"
     ></script>
   </head>
   <body>
@@ -3023,35 +3093,52 @@
           if (document.hidden) stopPlayback();
         });
         function showRef(index) {
-          const m = modalAssets[index];
-          if (!m) return;
+          const original = modalAssets[index];
+          if (!original) return;
           modalViewer.querySelectorAll("video").forEach((v) => v.pause());
           modalViewer.replaceChildren();
           modalIndex = index;
-          const clone = m.cloneNode(true);
+
+          const isVideo = original.tagName === "VIDEO";
+          modalViewer.classList.toggle("is-video", isVideo);
+          modalViewer.classList.toggle("is-square", !isVideo);
+          const clone = original.cloneNode(true);
           clone.hidden = false;
+          clone.removeAttribute("hidden");
           clone.removeAttribute("style");
-          clone.className = "";
-          if (clone.tagName === "VIDEO") {
+          clone.className = "modal-media";
+
+          if (isVideo) {
             clone.controls = true;
             clone.muted = false;
             clone.preload = "metadata";
+            clone.setAttribute("playsinline", "");
+          } else {
+            // Modal is opened after the viewer is populated: do not defer its first image.
+            clone.loading = "eager";
+            clone.decoding = "async";
           }
-          clone.addEventListener(
-            "error",
-            () => {
-              modalViewer.textContent =
-                "미디어를 불러올 수 없습니다. GitHub의 image/video 폴더를 확인해 주세요.";
-            },
-            { once: true },
-          );
+
+          const showError = () => {
+            if (clone.parentNode !== modalViewer) return;
+            const message = document.createElement("p");
+            message.className = "modal-error";
+            message.textContent =
+              "이 자료를 불러올 수 없습니다. 원본 이미지·영상 경로를 확인해 주세요.";
+            modalViewer.replaceChildren(message);
+          };
+          clone.addEventListener("error", showError, { once: true });
           modalViewer.appendChild(clone);
+          if (!isVideo && clone.complete && clone.naturalWidth === 0)
+            showError();
+
           document.getElementById("modal-count").textContent =
             `${index + 1} / ${modalAssets.length}`;
           document.getElementById("modal-prev").disabled = index === 0;
           document.getElementById("modal-next").disabled =
             index === modalAssets.length - 1;
         }
+
         for (const card of document.querySelectorAll(".reference-card")) {
           const open = () => {
             stopPlayback();
