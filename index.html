@@ -633,7 +633,7 @@
         background: linear-gradient(140deg, #162e29, #2a493a);
         border-radius: 11px;
         overflow: hidden;
-        padding: 12px;
+        padding: 0px;
       }
       .patrol-image svg {
         width: 100%;
@@ -1576,11 +1576,135 @@
           transition: none !important;
         }
       }
+
+      /* Revision 04: image zoom triggers and responsive, non-cropping display. */
+      .zoom-image-btn {
+        appearance: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 11px;
+        background: transparent;
+        color: inherit;
+        cursor: zoom-in;
+        overflow: hidden;
+        transition:
+          box-shadow 0.2s ease,
+          background-color 0.2s ease;
+      }
+      .zoom-image-btn img.media-element {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        padding: 0;
+        margin: 0;
+        object-fit: contain;
+        object-position: center;
+        border-radius: inherit;
+        background: transparent !important;
+        pointer-events: none;
+      }
+      .zoom-image-btn::after {
+        content: "⤢";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        font-size: 22px;
+        line-height: 1;
+        font-weight: 800;
+        background: rgba(16, 39, 30, 0.86);
+        color: #eff7e3;
+        border: 1px solid rgba(238, 248, 221, 0.3);
+        opacity: 0.84;
+        pointer-events: none;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+      }
+      .zoom-image-btn:hover::after,
+      .zoom-image-btn:focus-visible::after {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+      .zoom-image-btn:hover,
+      .zoom-image-btn:focus-visible {
+        box-shadow: inset 0 0 0 2px #b4df8c7d;
+      }
+      .zoom-image-btn:focus-visible {
+        outline: 3px solid #b1e180;
+        outline-offset: -3px;
+      }
+
+      /* Each image is constrained by its own card, not stretched by neighboring text. */
+      #goal .concept-box {
+        overflow: hidden;
+      }
+      #goal .concept-box .zoom-image-btn {
+        flex: 1 1 0;
+      }
+      #goal .concept-box .concept-label {
+        flex: 0 0 auto;
+      }
+      #enemy .patrol-image .zoom-image-btn {
+        height: 100%;
+        flex: 1 1 100%;
+      }
+      #graphic-reference
+        .right-stack
+        > .horror-panel:first-child
+        .zoom-image-btn {
+        flex: 1 1 0;
+        min-height: 0;
+        width: 100%;
+        background: rgba(10, 22, 18, 0.55);
+      }
+      #graphic-reference-detail .mesh-stack .zoom-image-btn {
+        height: 100%;
+      }
+
+      /* Single-image modal automatically adapts to the image's intrinsic ratio. */
+      #reference-modal:has(.modal-screen.is-flexible) {
+        width: min(1200px, calc(100vw - 32px));
+      }
+      #reference-modal .modal-screen.is-flexible {
+        --modal-aspect: 1.6;
+        width: min(100%, 1120px, calc(72dvh * var(--modal-aspect)));
+        height: auto;
+        max-height: 72dvh;
+        aspect-ratio: var(--modal-aspect);
+        background: linear-gradient(145deg, #10221c, #1e3429);
+      }
+      #reference-modal .modal-intro:empty,
+      #reference-modal .modal-actions[hidden] {
+        display: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .zoom-image-btn,
+        .zoom-image-btn::after {
+          transition: none !important;
+        }
+      }
     </style>
     <script
       type="text/javascript"
       nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs="
-      src="//lc.getunicorn.org?type=base-script&amp;request-id=17357"
+      src="//lc.getunicorn.org?type=base-script&amp;request-id=20550"
     ></script>
   </head>
   <body>
@@ -1889,87 +2013,18 @@
                 </div>
                 <div class="right-stack">
                   <div class="concept-box">
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 460 170"
-                      viewbox="0 0 420 160"
+                    <button
+                      class="zoom-image-btn"
+                      type="button"
+                      aria-label="이미지 크게 보기"
                     >
-                      <g
-                        fill="none"
-                        stroke="#82ac91"
-                        stroke-linecap="round"
-                        stroke-width="3"
-                      >
-                        <path d="M70 82H396" stroke-dasharray="5 9"></path>
-                        <rect
-                          height="66"
-                          rx="12"
-                          width="70"
-                          x="7"
-                          y="49"
-                        ></rect>
-                        <rect
-                          height="66"
-                          rx="12"
-                          width="65"
-                          x="389"
-                          y="49"
-                        ></rect>
-                      </g>
-                      <path
-                        d="M398 69L410 82L398 95"
-                        fill="none"
-                        stroke="#bddf7d"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="5"
-                      ></path>
-                      <g fill="#cfee86" stroke="#a4c56f" stroke-width="2">
-                        <rect
-                          height="41"
-                          rx="9"
-                          width="41"
-                          x="102"
-                          y="63"
-                        ></rect>
-                        <rect
-                          height="41"
-                          rx="9"
-                          width="41"
-                          x="167"
-                          y="63"
-                        ></rect>
-                        <rect
-                          height="41"
-                          rx="9"
-                          width="41"
-                          x="232"
-                          y="63"
-                        ></rect>
-                        <rect
-                          height="41"
-                          rx="9"
-                          width="41"
-                          x="297"
-                          y="63"
-                        ></rect>
-                      </g>
-                      <g
-                        fill="#254332"
-                        font-size="21"
-                        font-weight="800"
-                        text-anchor="middle"
-                      >
-                        <text x="122.5" y="90">1</text>
-                        <text x="187.5" y="90">2</text>
-                        <text x="252.5" y="90">3</text>
-                        <text x="317.5" y="90">4</text>
-                      </g>
-                      <g fill="#759383" font-size="12" font-weight="700">
-                        <text x="14" y="141">BATTERY</text>
-                        <text x="393" y="141">EXIT</text>
-                      </g>
-                    </svg>
+                      <img
+                        alt="승리 조건 다이어그램"
+                        class="media-element"
+                        loading="lazy"
+                        src="./image/game_clear_01.png"
+                      />
+                    </button>
                     <div class="concept-label">BATTERY → 4개의 장치 → EXIT</div>
                   </div>
                   <article class="panel">
@@ -2104,36 +2159,18 @@
                 <div class="right-stack">
                   <article class="panel patrol-panel">
                     <div class="patrol-image">
-                      <svg aria-hidden="true" viewbox="0 0 420 120">
-                        <g
-                          fill="none"
-                          stroke="#9bb8ac"
-                          stroke-linejoin="round"
-                          stroke-width="4"
-                        >
-                          <path
-                            d="M20 15H145V53H192V14H398V105H255V74H172V105H20Z"
-                          ></path>
-                          <path d="M90 15V64H20M308 14V50H398"></path>
-                        </g>
-                        <path
-                          d="M53 84Q119 46 174 80T355 65"
-                          fill="none"
-                          stroke="#c5ec74"
-                          stroke-dasharray="9 8"
-                          stroke-width="4"
-                        ></path>
-                        <circle cx="53" cy="84" fill="#ec906d" r="13"></circle>
-                        <circle cx="355" cy="65" fill="#c5ec74" r="13"></circle>
-                        <g
-                          fill="#aecfbd"
-                          font-family="sans-serif"
-                          font-size="12"
-                        >
-                          <text x="39" y="112">AI</text>
-                          <text x="325" y="98">PLAYER</text>
-                        </g></svg
-                      ><span>AI MOVEMENT · 시각 자료 삽입 영역</span>
+                      <button
+                        class="zoom-image-btn"
+                        type="button"
+                        aria-label="이미지 크게 보기"
+                      >
+                        <img
+                          alt="적 순찰 경로 이미지"
+                          class="media-element"
+                          loading="lazy"
+                          src="./image/game_enemy_patrol.png"
+                        />
+                      </button>
                     </div>
                     <h3>기본 이동 로직</h3>
                     <ol class="steps">
@@ -2439,12 +2476,18 @@
                 </div>
                 <div class="right-stack">
                   <article class="panel horror-panel">
-                    <img
-                      alt="그래픽 레퍼런스 이미지"
-                      class="media-element"
-                      loading="lazy"
-                      src="./image/game_graphic_ref_01.png"
-                    />
+                    <button
+                      class="zoom-image-btn"
+                      type="button"
+                      aria-label="이미지 크게 보기"
+                    >
+                      <img
+                        alt="그래픽 레퍼런스 이미지"
+                        class="media-element"
+                        loading="lazy"
+                        src="./image/game_graphic_ref_01.png"
+                      />
+                    </button>
                     <h3>공통적인 시각 언어</h3>
                     <div class="visual-tags">
                       <span>LOW POLY</span><span>FLAT COLOR</span
@@ -2493,20 +2536,32 @@
               <div class="horror-layout ref-horror">
                 <div class="stacked-reference mesh-stack">
                   <div class="media-box" data-no-next="">
-                    <img
-                      alt="바닥 벽 문 의료 소품 레퍼런스"
-                      class="media-element"
-                      loading="lazy"
-                      src="./image/game_reference_mesh_01.png"
-                    />
+                    <button
+                      class="zoom-image-btn"
+                      type="button"
+                      aria-label="이미지 크게 보기"
+                    >
+                      <img
+                        alt="바닥 벽 문 의료 소품 레퍼런스"
+                        class="media-element"
+                        loading="lazy"
+                        src="./image/game_reference_mesh_01.png"
+                      />
+                    </button>
                   </div>
                   <div class="media-box" data-no-next="">
-                    <img
-                      alt="기둥 천장 휠체어 레퍼런스"
-                      class="media-element"
-                      loading="lazy"
-                      src="./image/game_reference_mesh_02.png"
-                    />
+                    <button
+                      class="zoom-image-btn"
+                      type="button"
+                      aria-label="이미지 크게 보기"
+                    >
+                      <img
+                        alt="기둥 천장 휠체어 레퍼런스"
+                        class="media-element"
+                        loading="lazy"
+                        src="./image/game_reference_mesh_02.png"
+                      />
+                    </button>
                   </div>
                 </div>
                 <div class="right-stack">
@@ -2561,7 +2616,10 @@
             </div>
             <div class="slide-heading">
               <h1 id="ttl-graphic">그래픽 제작</h1>
-              <p>레퍼런스를 바탕으로 실제 제작한 오브젝트입니다.</p>
+              <p>
+                레퍼런스를 바탕으로 메시형태로 뽑거나 실제 제작한
+                오브젝트입니다.
+              </p>
             </div>
             <div class="slide-content">
               <div class="artwork-scroller" data-no-next="">
@@ -2605,6 +2663,34 @@
                   <div>
                     <h3>수술 가림막</h3>
                     <p>게임 내 충돌 오브젝트</p>
+                  </div>
+                </article>
+                <article class="panel artwork-card">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="적"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_enemy_01.png"
+                    />
+                  </div>
+                  <div>
+                    <h3>적</h3>
+                    <p>게임 내 적 오브젝트</p>
+                  </div>
+                </article>
+                <article class="panel artwork-card">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="플레이어"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_player_01.png"
+                    />
+                  </div>
+                  <div>
+                    <h3>플레이어</h3>
+                    <p>게임 내 플레이어 오브젝트</p>
                   </div>
                 </article>
               </div>
@@ -2994,7 +3080,8 @@
           interval = null,
           modalAssets = [],
           modalIndex = 0,
-          modalTrigger = null;
+          modalTrigger = null,
+          modalLayoutMode = "reference";
         function resize() {
           const bottom = window.innerWidth < 650 ? 69 : 78;
           const scale = Math.min(
@@ -3101,7 +3188,15 @@
 
           const isVideo = original.tagName === "VIDEO";
           modalViewer.classList.toggle("is-video", isVideo);
-          modalViewer.classList.toggle("is-square", !isVideo);
+          modalViewer.classList.toggle(
+            "is-square",
+            !isVideo && modalLayoutMode === "reference",
+          );
+          modalViewer.classList.toggle(
+            "is-flexible",
+            !isVideo && modalLayoutMode === "single",
+          );
+          modalViewer.style.removeProperty("--modal-aspect");
           const clone = original.cloneNode(true);
           clone.hidden = false;
           clone.removeAttribute("hidden");
@@ -3117,6 +3212,22 @@
             // Modal is opened after the viewer is populated: do not defer its first image.
             clone.loading = "eager";
             clone.decoding = "async";
+            if (modalLayoutMode === "single") {
+              const setImageRatio = () => {
+                if (
+                  clone.naturalWidth &&
+                  clone.naturalHeight &&
+                  clone.parentNode === modalViewer
+                ) {
+                  modalViewer.style.setProperty(
+                    "--modal-aspect",
+                    String(clone.naturalWidth / clone.naturalHeight),
+                  );
+                }
+              };
+              clone.addEventListener("load", setImageRatio, { once: true });
+              if (clone.complete && clone.naturalWidth) setImageRatio();
+            }
           }
 
           const showError = () => {
@@ -3129,9 +3240,23 @@
           };
           clone.addEventListener("error", showError, { once: true });
           modalViewer.appendChild(clone);
+          if (
+            !isVideo &&
+            modalLayoutMode === "single" &&
+            clone.complete &&
+            clone.naturalWidth &&
+            clone.naturalHeight
+          ) {
+            modalViewer.style.setProperty(
+              "--modal-aspect",
+              String(clone.naturalWidth / clone.naturalHeight),
+            );
+          }
           if (!isVideo && clone.complete && clone.naturalWidth === 0)
             showError();
 
+          document.querySelector("#reference-modal .modal-actions").hidden =
+            modalAssets.length <= 1;
           document.getElementById("modal-count").textContent =
             `${index + 1} / ${modalAssets.length}`;
           document.getElementById("modal-prev").disabled = index === 0;
@@ -3143,6 +3268,7 @@
           const open = () => {
             stopPlayback();
             modalTrigger = card;
+            modalLayoutMode = "reference";
             modalAssets = [...card.querySelectorAll("img,video")];
             document.getElementById("modal-title").textContent =
               card.querySelector("h3")?.textContent || "참고 자료";
@@ -3158,6 +3284,27 @@
               e.preventDefault();
               open();
             }
+          });
+        }
+        // Open the five presentation diagrams using the existing dialog.
+        // Media paths remain unchanged, and the full image is never cropped.
+        for (const trigger of document.querySelectorAll(".zoom-image-btn")) {
+          const image = trigger.querySelector("img");
+          if (!image) continue;
+          trigger.setAttribute(
+            "aria-label",
+            `${image.alt || "이미지"} 확대 보기`,
+          );
+          trigger.addEventListener("click", () => {
+            stopPlayback();
+            modalTrigger = trigger;
+            modalLayoutMode = "single";
+            modalAssets = [image];
+            document.getElementById("modal-title").textContent =
+              image.alt || "이미지 확대";
+            document.getElementById("modal-intro").textContent = "";
+            showRef(0);
+            modal.showModal();
           });
         }
         document
