@@ -695,7 +695,7 @@
         color: #f1f3ed;
         background:
           linear-gradient(90deg, #101414ed 0%, #121917d6 50%, #0b1312c9 100%),
-          url("./image/game_artboard_02.png") center / cover no-repeat,
+          url("./image/game_artboard_03.png") center / cover no-repeat,
           #171c19;
         border-color: #2b3733;
       }
@@ -1144,142 +1144,6 @@
         color: #55715e;
         letter-spacing: 0.02em;
       }
-      /* reference dialog */
-      dialog {
-        width: min(1100px, 94vw);
-        max-height: 92dvh;
-        border: 1px solid #dce6df;
-        border-radius: 18px;
-        background: #f7f9f4;
-        box-shadow: 0 28px 95px #0006;
-        padding: 22px;
-        color: #193a2b;
-      }
-      dialog::backdrop {
-        background: #0e211acf;
-        backdrop-filter: blur(6px);
-      }
-      .modal-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 15px;
-        align-items: center;
-        margin-bottom: 12px;
-      }
-      .modal-head h2 {
-        margin: 0;
-        font-size: 24px;
-      }
-      .modal-head button,
-      .modal-actions button {
-        border: 0;
-        background: #d4ec94;
-        color: #28472d;
-        border-radius: 9px;
-        padding: 8px 15px;
-        font-weight: 750;
-      }
-      .modal-intro {
-        color: #64806e;
-        margin: 0 0 15px;
-        font-size: 14px;
-      }
-      .modal-screen {
-        height: min(58dvh, 580px);
-        background: #132920;
-        border-radius: 13px;
-        overflow: hidden;
-        display: grid;
-        place-items: center;
-      }
-      .modal-screen img,
-      .modal-screen video {
-        height: 100%;
-        width: 100%;
-        max-width: 100%;
-        object-fit: contain;
-      }
-      .modal-actions {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        margin-top: 15px;
-      }
-      .modal-count {
-        font-size: 13px;
-        color: #54705c;
-      }
-      /* Revision 03: reference modal adapts to square images without cropping. */
-      #reference-modal {
-        width: min(800px, calc(100vw - 32px));
-        max-height: 94dvh;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-      }
-      #reference-modal:has(.modal-screen.is-square) {
-        width: min(730px, calc(100vw - 32px));
-      }
-      #reference-modal .modal-screen {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 0;
-        min-height: 0;
-        margin-inline: auto;
-        overflow: hidden;
-        background: linear-gradient(145deg, #132920, #1c3a2c);
-      }
-      #reference-modal .modal-screen.is-square {
-        width: min(100%, 650px, calc(100dvh - 240px));
-        height: auto;
-        aspect-ratio: 1 / 1;
-      }
-      #reference-modal .modal-screen.is-video {
-        width: 100%;
-        height: auto;
-        max-height: calc(100dvh - 240px);
-        aspect-ratio: 16 / 9;
-      }
-      #reference-modal .modal-screen img,
-      #reference-modal .modal-screen video {
-        position: absolute;
-        inset: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-        min-width: 0;
-        min-height: 0;
-        max-width: 100%;
-        max-height: 100%;
-        margin: 0;
-        padding: 0;
-        border: 0;
-        border-radius: 0;
-        object-fit: contain;
-        object-position: center center;
-      }
-      #reference-modal .modal-screen .modal-error {
-        margin: 0;
-        padding: 20px;
-        color: #f6f9ee;
-        text-align: center;
-        font-size: 14px;
-        overflow-wrap: anywhere;
-      }
-      #reference-modal .modal-actions {
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-      @media (max-height: 550px) {
-        #reference-modal .modal-screen.is-square {
-          width: min(100%, 280px, calc(100dvh - 160px));
-        }
-        #reference-modal .modal-screen.is-video {
-          max-height: 45dvh;
-        }
-      }
       @media (max-width: 650px) {
         #toolbar-row {
           padding: 0 10px 10px;
@@ -1414,7 +1278,7 @@
         z-index: 0;
         inset: -9px;
         pointer-events: none;
-        background: url("./image/game_artboard_02.png") center center/cover
+        background: url("./image/game_artboard_03.png") center center/cover
           no-repeat;
         filter: blur(9px);
         transform: scale(1.035);
@@ -1678,25 +1542,255 @@
         height: 100%;
       }
 
-      /* Single-image modal automatically adapts to the image's intrinsic ratio. */
-      #reference-modal:has(.modal-screen.is-flexible) {
-        width: min(1200px, calc(100vw - 32px));
-      }
-      #reference-modal .modal-screen.is-flexible {
-        --modal-aspect: 1.6;
-        width: min(100%, 1120px, calc(72dvh * var(--modal-aspect)));
-        height: auto;
-        max-height: 72dvh;
-        aspect-ratio: var(--modal-aspect);
-        background: linear-gradient(145deg, #10221c, #1e3429);
-      }
-      #reference-modal .modal-intro:empty,
-      #reference-modal .modal-actions[hidden] {
-        display: none;
-      }
       @media (prefers-reduced-motion: reduce) {
         .zoom-image-btn,
         .zoom-image-btn::after {
+          transition: none !important;
+        }
+      }
+
+      /* Mood references: a 2x2 image-only gallery between art direction and graphic references. */
+      #graphic-mood-reference {
+        isolation: isolate;
+      }
+      #graphic-mood-reference .mood-reference-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+      }
+      #graphic-mood-reference .mood-reference-tile {
+        position: relative;
+        min-width: 0;
+        min-height: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: block;
+        appearance: none;
+        isolation: isolate;
+        overflow: hidden;
+        cursor: zoom-in;
+        background: linear-gradient(145deg, #20372f, #101d1b);
+        border: 1px solid rgba(221, 237, 217, 0.26);
+        border-radius: 16px;
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      #graphic-mood-reference .mood-reference-tile > img.media-element {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        object-fit: cover;
+        object-position: center;
+        transition:
+          transform 0.35s ease,
+          filter 0.3s ease;
+      }
+      #graphic-mood-reference .mood-reference-tile::after {
+        content: "";
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          rgba(8, 20, 16, 0.13),
+          transparent 42%,
+          rgba(5, 16, 12, 0.32)
+        );
+      }
+      #graphic-mood-reference .mood-reference-tile .mood-tile-index {
+        position: absolute;
+        z-index: 4;
+        top: 13px;
+        left: 14px;
+        padding: 7px 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        background: rgba(16, 36, 29, 0.79);
+        border: 1px solid rgba(235, 250, 230, 0.25);
+        border-radius: 9px;
+        color: #f1f8ef;
+        font-size: 14px;
+        font-weight: 850;
+        letter-spacing: 0.06em;
+        line-height: 1.2;
+      }
+      #graphic-mood-reference .mood-reference-tile .mood-tile-index span {
+        color: #d0ed85;
+        font-size: 19px;
+        line-height: 0.9;
+      }
+      #graphic-mood-reference .mood-reference-tile:hover,
+      #graphic-mood-reference .mood-reference-tile:focus-visible {
+        border-color: #c8e9ac;
+        box-shadow:
+          0 12px 28px rgba(0, 0, 0, 0.28),
+          0 0 0 2px #c4eb8d55;
+      }
+      #graphic-mood-reference .mood-reference-tile:hover > img.media-element,
+      #graphic-mood-reference
+        .mood-reference-tile:focus-visible
+        > img.media-element {
+        transform: scale(1.035);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #graphic-mood-reference .mood-reference-tile,
+        #graphic-mood-reference .mood-reference-tile > img.media-element {
+          transition: none !important;
+        }
+      }
+
+      /* v6: One presentation-native media viewer, reused by every expandable asset. */
+      #graphic-mood-reference .slide-heading {
+        padding-right: 315px;
+      }
+      #mood-background-preview {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        z-index: 5;
+        font-size: 14px;
+        padding: 11px 17px;
+      }
+      #media-fullview[hidden] {
+        display: none !important;
+      }
+      #media-fullview {
+        position: absolute;
+        z-index: 100;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        isolation: isolate;
+        background: #0b1813;
+        border-radius: inherit;
+        outline: none;
+      }
+      #media-fullview .fullview-blur {
+        position: absolute;
+        inset: -38px;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(
+            135deg,
+            rgba(5, 16, 11, 0.57),
+            rgba(12, 35, 26, 0.51)
+          ),
+          var(--fullview-backdrop, none);
+        background-size: cover;
+        background-position: center;
+        filter: blur(26px) brightness(0.72);
+        transform: scale(1.06);
+      }
+      #media-fullview .fullview-stage {
+        position: absolute;
+        z-index: 1;
+        inset: 22px;
+        display: grid;
+        place-items: center;
+        min-height: 0;
+      }
+      #media-fullview .fullview-stage img,
+      #media-fullview .fullview-stage video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 12px;
+        object-fit: contain;
+        object-position: center;
+      }
+      #media-fullview .fullview-stage img {
+        cursor: zoom-out;
+      }
+      #media-fullview .fullview-stage video {
+        background: #08110e;
+        cursor: auto;
+      }
+      #media-fullview .fullview-close,
+      #media-fullview .fullview-nav button {
+        border: 1px solid rgba(238, 251, 229, 0.34);
+        background: rgba(8, 29, 20, 0.88);
+        color: #f6fff3;
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        font-weight: 750;
+      }
+      #media-fullview .fullview-close {
+        position: absolute;
+        z-index: 5;
+        top: 29px;
+        right: 30px;
+        width: 48px;
+        height: 48px;
+        font-size: 28px;
+        line-height: 1;
+      }
+      #media-fullview .fullview-nav[hidden] {
+        display: none !important;
+      }
+      #media-fullview .fullview-nav {
+        position: absolute;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        bottom: 26px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 7px;
+        border-radius: 15px;
+        background: rgba(7, 22, 15, 0.72);
+        backdrop-filter: blur(12px);
+      }
+      #media-fullview .fullview-nav button {
+        height: 40px;
+        min-width: 55px;
+        font-size: 21px;
+      }
+      #media-fullview .fullview-nav button:disabled {
+        opacity: 0.28;
+      }
+      #media-fullview .fullview-counter {
+        min-width: 55px;
+        color: #eff7e8;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 850;
+        font-variant-numeric: tabular-nums;
+      }
+      #media-fullview .fullview-error {
+        padding: 25px;
+        color: #f2f7e9;
+        font-size: 23px;
+        text-align: center;
+      }
+      #media-fullview .fullview-close:hover,
+      #media-fullview .fullview-nav button:hover:not(:disabled) {
+        background: rgba(40, 78, 54, 0.95);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #media-fullview *,
+        #mood-background-preview {
           transition: none !important;
         }
       }
@@ -1704,7 +1798,7 @@
     <script
       type="text/javascript"
       nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs="
-      src="//lc.getunicorn.org?type=base-script&amp;request-id=20550"
+      src="//lc.getunicorn.org?type=base-script&amp;request-id=8264"
     ></script>
   </head>
   <body>
@@ -1722,7 +1816,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >01 <span style="opacity: 0.55">/</span> 18</span
+                >01 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -1768,7 +1862,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >02 <span style="opacity: 0.55">/</span> 18</span
+                >02 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -1812,7 +1906,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >03 <span style="opacity: 0.55">/</span> 18</span
+                >03 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -1844,7 +1938,7 @@
                   <div class="reference-text">
                     <h3>데드 바이 데이라이트</h3>
                     <p>QTE와 숨기, 캐비닛 활용</p>
-                    <span class="open-hint">자료 크게 보기 ↗</span>
+                    <span class="open-hint">화면 크게 보기 ↗</span>
                   </div>
                 </article>
                 <article
@@ -1857,7 +1951,6 @@
                   <div class="reference-image">
                     <video
                       class="media-element"
-                      controls=""
                       playsinline=""
                       preload="metadata"
                       src="./video/sinYowamari_01.mp4"
@@ -1866,7 +1959,7 @@
                   <div class="reference-text">
                     <h3>신 요마와리</h3>
                     <p>심박수 사운드와 UI</p>
-                    <span class="open-hint">자료 크게 보기 ↗</span>
+                    <span class="open-hint">화면 크게 보기 ↗</span>
                   </div>
                 </article>
                 <article
@@ -1892,7 +1985,7 @@
                   <div class="reference-text">
                     <h3>아이작의 번제</h3>
                     <p>방 단위로 연결되는 맵 구성</p>
-                    <span class="open-hint">자료 크게 보기 ↗</span>
+                    <span class="open-hint">화면 크게 보기 ↗</span>
                   </div>
                 </article>
               </div>
@@ -1908,7 +2001,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >04 <span style="opacity: 0.55">/</span> 18</span
+                >04 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -1993,7 +2086,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >05 <span style="opacity: 0.55">/</span> 18</span
+                >05 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2051,7 +2144,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >06 <span style="opacity: 0.55">/</span> 18</span
+                >06 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2138,7 +2231,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >07 <span style="opacity: 0.55">/</span> 18</span
+                >07 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2207,7 +2300,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >08 <span style="opacity: 0.55">/</span> 18</span
+                >08 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2278,7 +2371,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >09 <span style="opacity: 0.55">/</span> 18</span
+                >09 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2332,7 +2425,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >10 <span style="opacity: 0.55">/</span> 18</span
+                >10 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2347,15 +2440,6 @@
                     LOW POLY<br /><em>RETRO HORROR</em>
                   </div>
                   <p>빛과 어둠, 제한된 색상으로 공간의 긴장감을 만듭니다.</p>
-                  <button
-                    aria-label="그래픽 배경 원본 이미지 보기"
-                    aria-pressed="false"
-                    class="backdrop-preview"
-                    id="backdrop-preview"
-                    type="button"
-                  >
-                    배경 이미지 선명하게 보기
-                  </button>
                 </div>
                 <div class="right-stack">
                   <article class="panel horror-panel">
@@ -2367,7 +2451,8 @@
                           style="background: #9e988e"
                         ></span
                         ><span class="palette-share">60%</span
-                        ><span class="palette-name">낡은 오프화이트</span
+                        ><span class="palette-name"
+                          >배경 및 벽, 바닥, 큰 오브젝트</span
                         ><code>#9e988e</code>
                       </div>
                       <div class="palette-item">
@@ -2376,7 +2461,8 @@
                           style="background: #374f4c"
                         ></span
                         ><span class="palette-share">30%</span
-                        ><span class="palette-name">바랜 청록</span
+                        ><span class="palette-name"
+                          >벽 페인트 및 일부 오브젝트</span
                         ><code>#374f4c</code>
                       </div>
                       <div class="palette-item">
@@ -2384,8 +2470,9 @@
                           class="color-chip"
                           style="background: #2c3136"
                         ></span
-                        ><span class="palette-share">기본</span
-                        ><span class="palette-name">짙은 회색</span
+                        ><span class="palette-share">포인트</span
+                        ><span class="palette-name"
+                          >파괴된 자국이나 긁힌 자국 등 포인트</span
                         ><code>#2c3136</code>
                       </div>
                       <div class="palette-item">
@@ -2394,7 +2481,7 @@
                           style="background: #8c252b"
                         ></span
                         ><span class="palette-share">강조</span
-                        ><span class="palette-name">경고 적색</span
+                        ><span class="palette-name">핏자국이나 비상등 표시</span
                         ><code>#8c252b</code>
                       </div>
                     </div>
@@ -2415,6 +2502,106 @@
             </div>
           </section>
           <section
+            class="slide tone-horror mood-reference-slide"
+            id="graphic-mood-reference"
+            aria-labelledby="ttl-graphic-mood-reference"
+            hidden
+          >
+            <div class="slide-meta">
+              <span
+                ><i class="brand-dot"></i> DEAD SIGNAL
+                <span class="meta-sep">/</span> 게임개발실습</span
+              >
+              <span class="meta-index"
+                >11 <span style="opacity: 0.55">/</span> 19</span
+              >
+            </div>
+            <div class="slide-heading">
+              <h1 id="ttl-graphic-mood-reference">그래픽 레퍼런스 · 분위기</h1>
+              <p>폐병원의 조명과 공간 분위기를 참고한 이미지입니다.</p>
+              <button
+                type="button"
+                id="mood-background-preview"
+                class="backdrop-preview"
+                aria-label="그래픽 분위기 배경 이미지 선명하게 보기"
+              >
+                배경 이미지 선명하게 보기 ↗
+              </button>
+            </div>
+            <div class="slide-content">
+              <div class="mood-reference-grid">
+                <button
+                  class="mood-reference-tile media-box"
+                  type="button"
+                  data-no-next=""
+                  aria-label="분위기 레퍼런스 01번 이미지 선명하게 보기"
+                >
+                  <img
+                    class="media-element"
+                    loading="lazy"
+                    alt="분위기 레퍼런스 01"
+                    src="./image/game_horror_reference_01.png"
+                  />
+                  <span class="mood-tile-index" aria-hidden="true"
+                    >01 <span>↗</span></span
+                  >
+                </button>
+                <button
+                  class="mood-reference-tile media-box"
+                  type="button"
+                  data-no-next=""
+                  aria-label="분위기 레퍼런스 02번 이미지 선명하게 보기"
+                >
+                  <img
+                    class="media-element"
+                    loading="lazy"
+                    alt="분위기 레퍼런스 02"
+                    src="./image/game_horror_reference_02.png"
+                  />
+                  <span class="mood-tile-index" aria-hidden="true"
+                    >02 <span>↗</span></span
+                  >
+                </button>
+                <button
+                  class="mood-reference-tile media-box"
+                  type="button"
+                  data-no-next=""
+                  aria-label="분위기 레퍼런스 03번 이미지 선명하게 보기"
+                >
+                  <img
+                    class="media-element"
+                    loading="lazy"
+                    alt="분위기 레퍼런스 03"
+                    src="./image/game_horror_reference_03.png"
+                  />
+                  <span class="mood-tile-index" aria-hidden="true"
+                    >03 <span>↗</span></span
+                  >
+                </button>
+                <button
+                  class="mood-reference-tile media-box"
+                  type="button"
+                  data-no-next=""
+                  aria-label="분위기 레퍼런스 04번 이미지 선명하게 보기"
+                >
+                  <img
+                    class="media-element"
+                    loading="lazy"
+                    alt="분위기 레퍼런스 04"
+                    src="./image/game_horror_reference_04.png"
+                  />
+                  <span class="mood-tile-index" aria-hidden="true"
+                    >04 <span>↗</span></span
+                  >
+                </button>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <span>GAME DEVELOPMENT PRACTICE · TEAM 04</span
+              ><span>GRAPHIC / MOOD REFERENCE</span>
+            </div>
+          </section>
+          <section
             aria-labelledby="ttl-graphic-reference"
             class="slide tone-horror"
             hidden=""
@@ -2425,12 +2612,14 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >11 <span style="opacity: 0.55">/</span> 18</span
+                >12 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
-              <h1 id="ttl-graphic-reference">그래픽 레퍼런스 · 작품</h1>
-              <p>단순한 형상과 강한 실루엣을 참고했습니다.</p>
+              <h1 id="ttl-graphic-reference">메시와 재질, 랜더링 레퍼런스</h1>
+              <p>
+                폴리곤의 수를 줄여 단순한 형상에서도 강한 실루엣을 참고했습니다.
+              </p>
             </div>
             <div class="slide-content">
               <div class="horror-layout ref-horror">
@@ -2447,8 +2636,9 @@
                     <div>
                       <h3>I Am Your Beast</h3>
                       <p>
-                        각진 바위, 큰 명암 덩어리, 넓은 색면으로 공간을 구분하는
-                        표현을 참고합니다.
+                        3D 모델의 낮은 폴리곤의 단순한 색면을 사용하지만
+                        시각적으로 넓을 색면을 통해 공간을 구분하고 명확한
+                        실루엣을 가진 특징을 참고했습니다.
                       </p>
                     </div>
                   </article>
@@ -2464,8 +2654,12 @@
                     <div>
                       <h3>Risk of Rain 2</h3>
                       <p>
-                        단순한 구조물과 넓은 색면, 실루엣 및 거리감 표현을
-                        참고합니다.
+                        텍스쳐 매핑으로 이미지를 사용하는 것 대신 단색 또는
+                        단순한 그라데이션을 입히는 방식을 참고 했습니다.
+                      </p>
+                      <p>
+                        램프 셰이딩 기반 스타일과 외곽선을 강하게쓰지 않는 것을
+                        참고 했습니다.
                       </p>
                     </div>
                   </article>
@@ -2481,7 +2675,7 @@
                         alt="그래픽 레퍼런스 이미지"
                         class="media-element"
                         loading="lazy"
-                        src="./image/game_graphic_ref_01.png"
+                        src="./image/game_artboard_02.png"
                       />
                     </button>
                     <h3>공통적인 시각 언어</h3>
@@ -2519,12 +2713,12 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >12 <span style="opacity: 0.55">/</span> 18</span
+                >13 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
               <h1 id="ttl-graphic-reference-detail">
-                그래픽 레퍼런스 · 제작 기준
+                메시와 재질, 랜더링 레퍼런스
               </h1>
               <p>공간 모듈과 재질을 제작하는 방식입니다.</p>
             </div>
@@ -2608,7 +2802,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >13 <span style="opacity: 0.55">/</span> 18</span
+                >14 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2690,6 +2884,34 @@
                     <p>게임 내 플레이어 오브젝트</p>
                   </div>
                 </article>
+                <article class="panel artwork-card">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="기둥"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_object_05.png"
+                    />
+                  </div>
+                  <div>
+                    <h3>기둥</h3>
+                    <p>게임 내 충돌 오브젝트</p>
+                  </div>
+                </article>
+                <article class="panel artwork-card">
+                  <div class="media-box" data-no-next="">
+                    <img
+                      alt="벽"
+                      class="media-element"
+                      loading="lazy"
+                      src="./image/game_object_04.png"
+                    />
+                  </div>
+                  <div>
+                    <h3>벽</h3>
+                    <p>게임 내 충돌 오브젝트</p>
+                  </div>
+                </article>
               </div>
             </div>
             <div class="slide-footer">
@@ -2708,7 +2930,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >14 <span style="opacity: 0.55">/</span> 18</span
+                >15 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2843,7 +3065,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >15 <span style="opacity: 0.55">/</span> 18</span
+                >16 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2901,7 +3123,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >16 <span style="opacity: 0.55">/</span> 18</span
+                >17 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2934,7 +3156,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >17 <span style="opacity: 0.55">/</span> 18</span
+                >18 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -2977,7 +3199,7 @@
                 ><i class="brand-dot"></i> DEAD SIGNAL
                 <span class="meta-sep">/</span> 게임개발실습</span
               ><span class="meta-index"
-                >18 <span style="opacity: 0.55">/</span> 18</span
+                >19 <span style="opacity: 0.55">/</span> 19</span
               >
             </div>
             <div class="slide-heading">
@@ -3004,7 +3226,7 @@
         <button aria-label="이전 슬라이드" id="prev" title="이전" type="button">
           ‹</button
         ><span aria-live="polite" class="slide-counter" id="slide-count"
-          >01 / 18</span
+          >01 / 19</span
         ><button
           aria-label="다음 슬라이드"
           id="next-page"
@@ -3039,23 +3261,37 @@
         </button>
       </div>
     </div>
-    <dialog
-      aria-describedby="modal-intro"
-      aria-labelledby="modal-title"
-      id="reference-modal"
+    <div
+      id="media-fullview"
+      role="dialog"
+      aria-modal="true"
+      aria-label="미디어 크게 보기"
+      tabindex="-1"
+      hidden
     >
-      <div class="modal-head">
-        <h2 id="modal-title"></h2>
-        <button id="modal-close" type="button">닫기 ×</button>
+      <div class="fullview-blur" aria-hidden="true"></div>
+      <div class="fullview-stage" id="fullview-stage"></div>
+      <button
+        type="button"
+        class="fullview-close"
+        id="fullview-close"
+        aria-label="확대 보기 닫기"
+        title="돌아가기 (Esc)"
+      >
+        ×
+      </button>
+      <div class="fullview-nav" id="fullview-nav" hidden>
+        <button id="fullview-prev" type="button" aria-label="이전 이미지">
+          ‹
+        </button>
+        <span class="fullview-counter" id="fullview-counter" aria-live="polite"
+          >1 / 1</span
+        >
+        <button id="fullview-next" type="button" aria-label="다음 이미지">
+          ›
+        </button>
       </div>
-      <p class="modal-intro" id="modal-intro"></p>
-      <div class="modal-screen" id="modal-viewer"></div>
-      <div class="modal-actions">
-        <button id="modal-prev" type="button">← 이전 자료</button
-        ><span class="modal-count" id="modal-count"></span
-        ><button id="modal-next" type="button">다음 자료 →</button>
-      </div>
-    </dialog>
+    </div>
     <script>
       (() => {
         "use strict";
@@ -3065,8 +3301,9 @@
         const shell = document.getElementById("deck-shell"),
           deck = document.getElementById("deck");
         const pages = [...document.querySelectorAll(".slide")];
-        const modal = document.getElementById("reference-modal"),
-          modalViewer = document.getElementById("modal-viewer");
+        const fullview = document.getElementById("media-fullview");
+        const fullviewStage = document.getElementById("fullview-stage");
+        const fullviewNav = document.getElementById("fullview-nav");
         const playBtn = document.getElementById("autoplay-play"),
           stopBtn = document.getElementById("autoplay-stop"),
           timer = document.querySelector(".timer-progress");
@@ -3075,10 +3312,10 @@
           playing = false,
           deadline = 0,
           interval = null,
-          modalAssets = [],
-          modalIndex = 0,
-          modalTrigger = null,
-          modalLayoutMode = "reference";
+          fullviewAssets = [],
+          fullviewIndex = 0,
+          fullviewTrigger = null,
+          fullviewTimer = null;
         function resize() {
           const bottom = window.innerWidth < 650 ? 69 : 78;
           const scale = Math.min(
@@ -3109,8 +3346,7 @@
         }
         function show(index, hash = true) {
           const n = Math.max(0, Math.min(index, pages.length - 1));
-          if (n !== current && typeof stopArtPreview === "function")
-            stopArtPreview();
+          if (n !== current && !fullview.hidden) closeFullview(false);
           pages.forEach((page, i) => {
             page.hidden = i !== n;
             if (i !== n)
@@ -3131,7 +3367,7 @@
         }
         function tick() {
           if (!playing) return;
-          if (document.hidden || modal.open) {
+          if (document.hidden || !fullview.hidden) {
             stopPlayback();
             return;
           }
@@ -3176,105 +3412,112 @@
         document.addEventListener("visibilitychange", () => {
           if (document.hidden) stopPlayback();
         });
-        function showRef(index) {
-          const original = modalAssets[index];
-          if (!original) return;
-          modalViewer.querySelectorAll("video").forEach((v) => v.pause());
-          modalViewer.replaceChildren();
-          modalIndex = index;
-
+        // Media expands within the current 16:9 slide: no browser-style popup.
+        // Photos return by image click, close, Esc or (after 8.5 s) timeout.
+        // Video keeps native playback controls and never closes on a timer.
+        function clearFullviewTimer() {
+          if (fullviewTimer !== null) clearTimeout(fullviewTimer);
+          fullviewTimer = null;
+        }
+        function closeFullview(restoreFocus = true) {
+          if (fullview.hidden) return;
+          clearFullviewTimer();
+          fullviewStage.querySelectorAll("video").forEach((v) => v.pause());
+          fullview.hidden = true;
+          fullviewStage.replaceChildren();
+          fullview.style.removeProperty("--fullview-backdrop");
+          if (restoreFocus && fullviewTrigger?.isConnected)
+            fullviewTrigger.focus({ preventScroll: true });
+        }
+        function showFullviewAsset(index) {
+          if (index < 0 || index >= fullviewAssets.length) return;
+          clearFullviewTimer();
+          fullviewStage.querySelectorAll("video").forEach((v) => v.pause());
+          fullviewStage.replaceChildren();
+          fullviewIndex = index;
+          const original = fullviewAssets[index];
           const isVideo = original.tagName === "VIDEO";
-          modalViewer.classList.toggle("is-video", isVideo);
-          modalViewer.classList.toggle(
-            "is-square",
-            !isVideo && modalLayoutMode === "reference",
-          );
-          modalViewer.classList.toggle(
-            "is-flexible",
-            !isVideo && modalLayoutMode === "single",
-          );
-          modalViewer.style.removeProperty("--modal-aspect");
           const clone = original.cloneNode(true);
           clone.hidden = false;
           clone.removeAttribute("hidden");
           clone.removeAttribute("style");
-          clone.className = "modal-media";
-
+          clone.removeAttribute("id");
+          clone.removeAttribute("class");
           if (isVideo) {
             clone.controls = true;
-            clone.muted = false;
             clone.preload = "metadata";
+            clone.muted = false;
             clone.setAttribute("playsinline", "");
+            clone.addEventListener("click", (event) => event.stopPropagation());
           } else {
-            // Modal is opened after the viewer is populated: do not defer its first image.
             clone.loading = "eager";
             clone.decoding = "async";
-            if (modalLayoutMode === "single") {
-              const setImageRatio = () => {
-                if (
-                  clone.naturalWidth &&
-                  clone.naturalHeight &&
-                  clone.parentNode === modalViewer
-                ) {
-                  modalViewer.style.setProperty(
-                    "--modal-aspect",
-                    String(clone.naturalWidth / clone.naturalHeight),
-                  );
-                }
-              };
-              clone.addEventListener("load", setImageRatio, { once: true });
-              if (clone.complete && clone.naturalWidth) setImageRatio();
-            }
+            clone.addEventListener("click", closeFullview);
           }
-
-          const showError = () => {
-            if (clone.parentNode !== modalViewer) return;
-            const message = document.createElement("p");
-            message.className = "modal-error";
-            message.textContent =
-              "이 자료를 불러올 수 없습니다. 원본 이미지·영상 경로를 확인해 주세요.";
-            modalViewer.replaceChildren(message);
-          };
-          clone.addEventListener("error", showError, { once: true });
-          modalViewer.appendChild(clone);
-          if (
-            !isVideo &&
-            modalLayoutMode === "single" &&
-            clone.complete &&
-            clone.naturalWidth &&
-            clone.naturalHeight
-          ) {
-            modalViewer.style.setProperty(
-              "--modal-aspect",
-              String(clone.naturalWidth / clone.naturalHeight),
-            );
-          }
+          const url = original.getAttribute("src");
+          fullview.style.setProperty(
+            "--fullview-backdrop",
+            url && !isVideo ? `url(${JSON.stringify(url)})` : "none",
+          );
+          clone.addEventListener(
+            "error",
+            () => {
+              if (clone.parentNode !== fullviewStage) return;
+              const error = document.createElement("p");
+              error.className = "fullview-error";
+              error.textContent =
+                "미디어를 불러올 수 없습니다. 파일 경로를 확인해 주세요.";
+              fullviewStage.replaceChildren(error);
+            },
+            { once: true },
+          );
+          fullviewStage.appendChild(clone);
           if (!isVideo && clone.complete && clone.naturalWidth === 0)
-            showError();
-
-          document.querySelector("#reference-modal .modal-actions").hidden =
-            modalAssets.length <= 1;
-          document.getElementById("modal-count").textContent =
-            `${index + 1} / ${modalAssets.length}`;
-          document.getElementById("modal-prev").disabled = index === 0;
-          document.getElementById("modal-next").disabled =
-            index === modalAssets.length - 1;
+            clone.dispatchEvent(new Event("error"));
+          fullviewNav.hidden = fullviewAssets.length <= 1;
+          document.getElementById("fullview-counter").textContent =
+            `${index + 1} / ${fullviewAssets.length}`;
+          document.getElementById("fullview-prev").disabled = index === 0;
+          document.getElementById("fullview-next").disabled =
+            index === fullviewAssets.length - 1;
+          if (!isVideo) fullviewTimer = setTimeout(() => closeFullview(), 8500);
         }
-
+        function openFullview(assets, trigger) {
+          if (!assets.length) return;
+          stopPlayback();
+          // Prevent multiple videos from playing beneath the preview.
+          document.querySelectorAll(".slide video").forEach((v) => v.pause());
+          fullviewTrigger = trigger;
+          fullviewAssets = assets;
+          pages[current].appendChild(fullview);
+          fullview.hidden = false;
+          showFullviewAsset(0);
+          fullview.focus({ preventScroll: true });
+        }
+        document
+          .getElementById("fullview-close")
+          .addEventListener("click", () => closeFullview());
+        document
+          .getElementById("fullview-prev")
+          .addEventListener("click", () =>
+            showFullviewAsset(fullviewIndex - 1),
+          );
+        document
+          .getElementById("fullview-next")
+          .addEventListener("click", () =>
+            showFullviewAsset(fullviewIndex + 1),
+          );
+        fullview.addEventListener("click", (e) => {
+          if (
+            e.target === fullview ||
+            e.target.classList.contains("fullview-blur") ||
+            e.target === fullviewStage
+          )
+            closeFullview();
+        });
         for (const card of document.querySelectorAll(".reference-card")) {
-          const open = () => {
-            stopPlayback();
-            modalTrigger = card;
-            modalLayoutMode = "reference";
-            modalAssets = [...card.querySelectorAll("img,video")];
-            document.getElementById("modal-title").textContent =
-              card.querySelector("h3")?.textContent || "참고 자료";
-            document.getElementById("modal-intro").textContent =
-              card.querySelector("p")?.textContent || "";
-            card.querySelectorAll("video").forEach((v) => v.pause());
-            showRef(0);
-            modal.showModal();
-          };
+          const open = () =>
+            openFullview([...card.querySelectorAll("img,video")], card);
           card.addEventListener("click", open);
           card.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -3283,8 +3526,6 @@
             }
           });
         }
-        // Open the five presentation diagrams using the existing dialog.
-        // Media paths remain unchanged, and the full image is never cropped.
         for (const trigger of document.querySelectorAll(".zoom-image-btn")) {
           const image = trigger.querySelector("img");
           if (!image) continue;
@@ -3292,46 +3533,37 @@
             "aria-label",
             `${image.alt || "이미지"} 확대 보기`,
           );
-          trigger.addEventListener("click", () => {
-            stopPlayback();
-            modalTrigger = trigger;
-            modalLayoutMode = "single";
-            modalAssets = [image];
-            document.getElementById("modal-title").textContent =
-              image.alt || "이미지 확대";
-            document.getElementById("modal-intro").textContent = "";
-            showRef(0);
-            modal.showModal();
+          trigger.addEventListener("click", () =>
+            openFullview([image], trigger),
+          );
+        }
+        for (const tile of document.querySelectorAll(".mood-reference-tile")) {
+          tile.addEventListener("click", () => {
+            const image = tile.querySelector("img");
+            if (image) openFullview([image], tile);
           });
         }
-        document
-          .getElementById("modal-close")
-          .addEventListener("click", () => modal.close());
-        document
-          .getElementById("modal-prev")
-          .addEventListener("click", () => showRef(modalIndex - 1));
-        document
-          .getElementById("modal-next")
-          .addEventListener("click", () => showRef(modalIndex + 1));
-        modal.addEventListener("close", () => {
-          modalViewer.querySelectorAll("video").forEach((v) => v.pause());
-          modalViewer.replaceChildren();
-          modalTrigger?.focus();
-        });
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) modal.close();
+        // The atmosphere artwork button belongs to the mood reference slide (page 11).
+        const atmosphereButton = document.getElementById(
+          "mood-background-preview",
+        );
+        atmosphereButton.addEventListener("click", () => {
+          const image = document.createElement("img");
+          image.src = "./image/game_artboard_03.png";
+          image.alt = "그래픽 분위기 배경 원본";
+          openFullview([image], atmosphereButton);
         });
         document.addEventListener("keydown", (e) => {
-          if (modal.open) {
-            if (e.key === "Escape") modal.close();
-            if (e.target.closest("video")) return;
-            if (e.key === "ArrowRight" && modalIndex < modalAssets.length - 1) {
+          if (!fullview.hidden) {
+            if (e.key === "Escape") {
               e.preventDefault();
-              showRef(modalIndex + 1);
-            }
-            if (e.key === "ArrowLeft" && modalIndex > 0) {
+              closeFullview();
+            } else if (e.key === "ArrowRight") {
               e.preventDefault();
-              showRef(modalIndex - 1);
+              showFullviewAsset(fullviewIndex + 1);
+            } else if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              showFullviewAsset(fullviewIndex - 1);
             }
             return;
           }
@@ -3428,48 +3660,6 @@
             host.classList.add("has-image-art");
           }
         }
-        // Art background preview: a click removes the blur; the next deliberate mouse movement restores it.
-        const artSlide = document.getElementById("graphic-direction"),
-          artButton = document.getElementById("backdrop-preview");
-        let artPointerOrigin = null,
-          artPreviewTimeout = null;
-        function stopArtPreview() {
-          if (!artSlide.classList.contains("is-art-preview")) return;
-          artSlide.classList.remove("is-art-preview");
-          artButton.setAttribute("aria-pressed", "false");
-          if (artPreviewTimeout !== null) clearTimeout(artPreviewTimeout);
-          artPreviewTimeout = null;
-          artPointerOrigin = null;
-        }
-        artButton.addEventListener("click", (e) => {
-          if (artPreviewTimeout !== null) clearTimeout(artPreviewTimeout);
-          artPointerOrigin = { x: e.clientX, y: e.clientY };
-          artSlide.classList.add("is-art-preview");
-          artButton.setAttribute("aria-pressed", "true");
-          artPreviewTimeout = setTimeout(stopArtPreview, 8500);
-        });
-        document.addEventListener(
-          "pointermove",
-          (e) => {
-            if (
-              !artSlide.classList.contains("is-art-preview") ||
-              !artPointerOrigin
-            )
-              return;
-            if (
-              Math.hypot(
-                e.clientX - artPointerOrigin.x,
-                e.clientY - artPointerOrigin.y,
-              ) > 14
-            )
-              stopArtPreview();
-          },
-          { passive: true },
-        );
-        artSlide.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") stopArtPreview();
-        });
-
         resize();
         fromHash();
         syncPlayback();
